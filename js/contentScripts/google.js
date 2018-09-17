@@ -1,4 +1,4 @@
-console.log('dpd3 here');
+// console.log('dpd3 here');
 
 //define keyboard shortcuts up here
 const KEYBOARD_SHORTCUTS = {
