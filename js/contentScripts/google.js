@@ -11,6 +11,24 @@ function openAllLinks() {
     });
 }
 
+function getActionFromActionObj(actionObj) {
+    return actionObj.fn.name;
+}
+
+function getKeyComboToActionMapping() {
+    const keyComboToActionMapping = {};
+
+    for (const keyCombo in KEYBOARD_SHORTCUTS) {
+        if (KEYBOARD_SHORTCUTS.hasOwnProperty(keyCombo)) {
+            const actionObj = KEYBOARD_SHORTCUTS[keyCombo];
+            const action = getActionFromActionObj(actionObj);
+            keyComboToActionMapping[keyCombo] = action;
+        }
+    }
+
+    return keyComboToActionMapping;;
+}
+
 //register all the keyboard shortcuts into Mousetrap
 for (const keyCombo in KEYBOARD_SHORTCUTS) {
     if (KEYBOARD_SHORTCUTS.hasOwnProperty(keyCombo)) {
@@ -24,3 +42,12 @@ for (const keyCombo in KEYBOARD_SHORTCUTS) {
         });
     }
 }
+
+//add listener from popup
+chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
+    if(request.req === 'getKeyboardShortcuts'){
+        const data = getKeyComboToActionMapping();
+        sendResponse(data);
+    }
+});
+
