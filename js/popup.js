@@ -19,7 +19,10 @@ function getTBody() {
     return $(`${SELECTORS.KEYBOARD_SHORTCUTS_TABLE} tbody`);
 }
 
-function addKeyboardShortcutToPage(keyCombo, action) {
+function addKeyboardShortcutToPage(keyboardShortcut) {
+
+    const {keyCombo, action} = keyboardShortcut;
+
     const tbody = $(getTBody());
 
     const keyComboTd = $('<td>').text(keyCombo);
@@ -31,11 +34,8 @@ function addKeyboardShortcutToPage(keyCombo, action) {
     tbody.append(tr);
 }
 
-function displayPage(data) {
-    for (const keyCombo in data) {
-        if (data.hasOwnProperty(keyCombo)) {
-            const action = data[keyCombo];
-            addKeyboardShortcutToPage(keyCombo, action);
-        }
+function displayPage(keyboardShortcuts) {
+    for (const keyboardShortcut of keyboardShortcuts) {
+        addKeyboardShortcutToPage(keyboardShortcut);
     }
 }

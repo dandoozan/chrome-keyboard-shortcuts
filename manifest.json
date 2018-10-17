@@ -4,7 +4,7 @@
     "description": "",
     "permissions": [
         "tabs",
-        "*://*/*"
+        "<all_urls>"
     ],
     "content_security_policy": "script-src 'self' 'unsafe-eval' https://www.google.com; object-src 'self'",
     "manifest_version": 2,
@@ -13,17 +13,29 @@
     },
     "content_scripts": [
         {
-            "matches": ["https://www.google.com/search?*"],
+            "matches": ["<all_urls>"],
             "exclude_matches": [],
             "js": [
                 "js/vendor/jquery-3.1.1.min.js",
                 "js/vendor/mousetrap.min.js",
+                "js/contentScripts/main.js",
+                "js/contentScripts/general.js"
+            ]
+        },
+        {
+            "matches": ["https://www.google.com/search?*"],
+            "exclude_matches": [],
+            "js": [
                 "js/contentScripts/google.js"
             ]
         }
     ],
     "background": {
-        "scripts": [ "js/background/background_listenForReload.js" ],
+        "scripts": [
+            "js/background/background_util.js",
+            "js/background/background_listenForReload.js",
+            "js/background/background.js"
+        ],
         "persistent": false
     }
 }
