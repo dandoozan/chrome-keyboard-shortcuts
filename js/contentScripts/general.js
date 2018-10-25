@@ -2,10 +2,7 @@
 //todo: add a flag to indicate that it should send to background so I
 //dont have to create a function below that send it to the background
 KS.add('command+alt+.', closeTabsToTheRight);
-// KS.add('cmd+c', copyOrCopyUrlOfPageIfNoTextIsSelected);
-// KS.add('?', moveTabLeft);
-// KS.add('?', moveTabRight);
-// KS.add('?', moveTabToFirstPosition);
+KS.add('t+p', moveTabToNewWindow);
 
 
 function sendToBackground(fnName, params) {
@@ -17,4 +14,9 @@ function sendToBackground(fnName, params) {
 function closeTabsToTheRight() {
     console.log('closeTabsToTheRight');
     sendToBackground('closeTabsToTheRight');
+}
+
+function moveTabToNewWindow() {
+    console.log('moveTabToNewWindow');
+    sendToBackground('moveTabToNewWindow');
 }

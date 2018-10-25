@@ -1,18 +1,21 @@
 const BACKGROUND_FUNCTIONS = {
     closeTabsToTheRight() {
-        console.log('woot');
         u.getCurrentTab((currentTab) => {
-            console.log('​closeTabsToTheRight -> currentTab=', currentTab);
             const currentTabIndex = currentTab.index;
             u.getAllTabs((tabs) => {
-                console.log('​closeTabsToTheRight -> tabs=', tabs);
-                const tabsToClose = [];
                 tabs.forEach((tab, index) => {
                     if (tab.index > currentTabIndex) {
-                        tabsToClose.push(tab);
+                        u.closeTab(tab);
                     }
                 });
-                u.closeTabs(tabsToClose);
+            });
+        });
+    },
+
+    moveTabToNewWindow() {
+        u.getAllSelectedTabs((tabs) => {
+            u.closeTabs(tabs, () => {
+                u.createNewWindowWithTabs(tabs);
             });
         });
     }

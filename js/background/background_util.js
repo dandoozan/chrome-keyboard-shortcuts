@@ -10,10 +10,19 @@ var u = {
             cb(tabs);
         });
     },
-    closeTab(tab) {
-        chrome.tabs.remove(tab.id);
+    getAllSelectedTabs(cb) {
+        chrome.tabs.query({ currentWindow: true, highlighted: true }, (tabs) => {
+            cb(tabs);
+        });
     },
-    closeTabs(tabs) {
-        chrome.tabs.remove(tabs.map((tab) => tab.id));
-    }
+    closeTab(tab, cb) {
+        chrome.tabs.remove(tab.id, cb);
+    },
+    closeTabs(tabs, cb) {
+        chrome.tabs.remove(tabs.map((tab) => tab.id), cb);
+    },
+    createNewWindowWithTabs(tabs, cb) {
+        const tabUrls = tabs.map((tab) => tab.url);
+        chrome.windows.create({ url: tabUrls }, cb);
+    },
 }
