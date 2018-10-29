@@ -14,8 +14,25 @@ const BACKGROUND_FUNCTIONS = {
 
     moveTabToNewWindow() {
         u.getAllSelectedTabs((tabs) => {
+            //todo: redo this to use tabs.move api (so that I'm not reloading
+            //all the tabs when i move them to a new window)
             u.closeTabs(tabs, () => {
                 u.createNewWindowWithTabs(tabs);
+            });
+        });
+    },
+
+    moveTabLeft() {
+        u.getCurrentTab((tab) => {
+            chrome.tabs.move(tab.id, {
+                index: tab.index - 1
+            });
+        });
+    },
+    moveTabRight() {
+        u.getCurrentTab((tab) => {
+            chrome.tabs.move(tab.id, {
+                index: tab.index + 1
             });
         });
     }
