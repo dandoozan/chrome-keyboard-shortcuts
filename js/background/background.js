@@ -11,6 +11,18 @@ const BACKGROUND_FUNCTIONS = {
             });
         });
     },
+    closeTabsToTheLeft() {
+        u.getCurrentTab((currentTab) => {
+            const currentTabIndex = currentTab.index;
+            u.getAllTabs((tabs) => {
+                tabs.forEach((tab) => {
+                    if (tab.index < currentTabIndex) {
+                        u.closeTab(tab);
+                    }
+                });
+            });
+        });
+    },
 
     moveTabToNewWindow() {
         u.getAllSelectedTabs((tabs) => {

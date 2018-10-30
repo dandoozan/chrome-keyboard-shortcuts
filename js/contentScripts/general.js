@@ -1,6 +1,7 @@
 //todo: add a flag to indicate that it should send to background so I
 //dont have to create a function below that send it to the background
-KS.add('command+alt+.', closeTabsToTheRight);
+KS.add('t+e', closeTabsToTheRight);
+KS.add('t+q', () => sendToBackground('closeTabsToTheLeft'));
 KS.add('t+p', moveTabToNewWindow);
 KS.add('t+,', moveTabLeft);
 KS.add('t+.', moveTabRight);
