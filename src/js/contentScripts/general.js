@@ -1,4 +1,5 @@
 const KS = require('../modules/KS');
+require('../init');
 
 KS.add('t+e', closeTabsToTheRight);
 KS.add('t+q', () => sendToBackground('closeTabsToTheLeft'));

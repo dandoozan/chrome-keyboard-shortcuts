@@ -1,5 +1,6 @@
 const KS = require('../modules/KS');
 const $ = require('jquery');
+require('../init');
 
 KS.add('alt+enter', openAllLinks);
 

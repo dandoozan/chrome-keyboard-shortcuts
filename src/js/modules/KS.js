@@ -1,18 +1,20 @@
-const Mousetrap = require('mousetrap');
+const keyboardShortcuts = [];
 
 module.exports = {
-    _keyboardShortcuts: [],
     getKeyboardShortcuts() {
-        return this._keyboardShortcuts;
+        return keyboardShortcuts;
     },
     addToKeyboardShortcutsArray(keyCombo, fn, params) {
-        this._keyboardShortcuts.push({
+        keyboardShortcuts.push({
             keyCombo,
             action: fn.name,
         });
+        console.log('​addToKeyboardShortcutsArray -> keyboardShortcuts=', keyboardShortcuts);
     },
     add(keyCombo, fn, ...params) {
+        console.log('​add -> keyCombo=', keyCombo);
         //register keyboard shortcut with Mousetrap
+        const Mousetrap = require('mousetrap');
         Mousetrap.bind(keyCombo, (e, kcmbo) => {
             //todo: display a toast here
             fn(...params);

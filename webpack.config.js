@@ -70,6 +70,12 @@ module.exports = {
             path.join(SRC_DIR_NAME, 'popup.html'),
         ]),
     ],
+    module: {
+        rules: [{
+            test: /\.css$/,
+            use: ['style-loader', 'css-loader']
+        }]
+    },
     output: {
         filename: generateOutputFileName,
         path: path.join(__dirname, DIST_DIR_NAME),

@@ -115,7 +115,18 @@ eval("var __WEBPACK_AMD_DEFINE_RESULT__;/*global define:false */\n/**\n * Copyri
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const KS = __webpack_require__(/*! ../modules/KS */ \"./src/js/modules/KS.js\");\nconst $ = __webpack_require__(/*! jquery */ \"./node_modules/jquery/dist/jquery.js\");\n\nKS.add('alt+enter', openAllLinks);\n\nfunction openAllLinks() {\n    $('a.klitem').toArray().forEach((el) => {\n        window.open($(el).attr('href'))\n    });\n}\n\n\n//# sourceURL=webpack:///./src/js/contentScripts/google.js?");
+eval("const KS = __webpack_require__(/*! ../modules/KS */ \"./src/js/modules/KS.js\");\nconst $ = __webpack_require__(/*! jquery */ \"./node_modules/jquery/dist/jquery.js\");\n__webpack_require__(/*! ../init */ \"./src/js/init.js\");\n\nKS.add('alt+enter', openAllLinks);\n\nfunction openAllLinks() {\n    $('a.klitem').toArray().forEach((el) => {\n        window.open($(el).attr('href'))\n    });\n}\n\n\n//# sourceURL=webpack:///./src/js/contentScripts/google.js?");
+
+/***/ }),
+
+/***/ "./src/js/init.js":
+/*!************************!*\
+  !*** ./src/js/init.js ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("// console.log('dpd here');\nconst Mousetrap = __webpack_require__(/*! mousetrap */ \"./node_modules/mousetrap/mousetrap.js\");\nconst KS = __webpack_require__(/*! ./modules/KS */ \"./src/js/modules/KS.js\");\n\n//override the \"stopCallback\" function so that the keyboard shortcuts work in\n//input fields\nMousetrap.stopCallback = function (e, element, combo) {\n    //just return false to make sure it never stops the callback (ie. all\n    //keyboard shortcuts go through all the time)\n    return false;\n\n    //Note: below is the default implementation (gotten from: https://craig.is/killing/mice)\n    /*\n    //if the element has the class \"mousetrap\" then no need to stop\n    if ((' ' + element.className + ' ').indexOf(' mousetrap ') > -1) {\n        return false;\n    }\n\n    // stop for input, select, and textarea\n    return element.tagName == 'INPUT' || element.tagName == 'SELECT' ||\n    element.tagName == 'TEXTAREA' || (element.contentEditable &&\n    element.contentEditable == 'true');\n    */\n}\n\n//add listener from popup\nchrome.extension.onMessage.addListener(function (request, sender, sendResponse) {\n    if (request.req === 'getKeyboardShortcuts') {\n        const data = KS.getKeyboardShortcuts();\n        console.log('​data=', data);\n        sendResponse(data);\n    }\n});\n\n//# sourceURL=webpack:///./src/js/init.js?");
 
 /***/ }),
 
@@ -126,7 +137,7 @@ eval("const KS = __webpack_require__(/*! ../modules/KS */ \"./src/js/modules/KS.
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const Mousetrap = __webpack_require__(/*! mousetrap */ \"./node_modules/mousetrap/mousetrap.js\");\n\nmodule.exports = {\n    _keyboardShortcuts: [],\n    getKeyboardShortcuts() {\n        return this._keyboardShortcuts;\n    },\n    addToKeyboardShortcutsArray(keyCombo, fn, params) {\n        this._keyboardShortcuts.push({\n            keyCombo,\n            action: fn.name,\n        });\n    },\n    add(keyCombo, fn, ...params) {\n        //register keyboard shortcut with Mousetrap\n        Mousetrap.bind(keyCombo, (e, kcmbo) => {\n            //todo: display a toast here\n            fn(...params);\n            return false; //prevent default (from the docs: \"Returning false here works the same way as jQuery's return false. It prevents the default action and stops the event from bubbling up.\")\n        });\n\n        //add it to my list of keyboard shortcuts\n        this.addToKeyboardShortcutsArray(keyCombo, fn, params)\n    },\n}\n\n\n//# sourceURL=webpack:///./src/js/modules/KS.js?");
+eval("const keyboardShortcuts = [];\n\nmodule.exports = {\n    getKeyboardShortcuts() {\n        return keyboardShortcuts;\n    },\n    addToKeyboardShortcutsArray(keyCombo, fn, params) {\n        keyboardShortcuts.push({\n            keyCombo,\n            action: fn.name,\n        });\n        console.log('​addToKeyboardShortcutsArray -> keyboardShortcuts=', keyboardShortcuts);\n    },\n    add(keyCombo, fn, ...params) {\n        console.log('​add -> keyCombo=', keyCombo);\n        //register keyboard shortcut with Mousetrap\n        const Mousetrap = __webpack_require__(/*! mousetrap */ \"./node_modules/mousetrap/mousetrap.js\");\n        Mousetrap.bind(keyCombo, (e, kcmbo) => {\n            //todo: display a toast here\n            fn(...params);\n            return false; //prevent default (from the docs: \"Returning false here works the same way as jQuery's return false. It prevents the default action and stops the event from bubbling up.\")\n        });\n\n        //add it to my list of keyboard shortcuts\n        this.addToKeyboardShortcutsArray(keyCombo, fn, params)\n    },\n}\n\n//# sourceURL=webpack:///./src/js/modules/KS.js?");
 
 /***/ })
 
