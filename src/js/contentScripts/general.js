@@ -1,3 +1,5 @@
+const KS = require('../modules/KS');
+
 KS.add('t+e', closeTabsToTheRight);
 KS.add('t+q', () => sendToBackground('closeTabsToTheLeft'));
 KS.add('t+p', moveTabToNewWindow);

@@ -1,3 +1,6 @@
+//todo: figure out how to move this file to CommonChromeExtensions so that I can
+//use it in other projects
+
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin')

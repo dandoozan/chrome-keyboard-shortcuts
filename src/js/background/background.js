@@ -1,5 +1,5 @@
 const u = require('../../../../_CommonChromeExtensions/background_utils');
-// import '../../../_CommonChromeExtensions/background_listenForReload';
+require('../../../../_CommonChromeExtensions/background_listenForReload');
 
 const BACKGROUND_FUNCTIONS = {
     closeTabsToTheRight() {
