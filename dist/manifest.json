@@ -17,30 +17,25 @@
         "48": "images/icon.png",
         "128": "images/icon.png"
     },
-    "content_scripts": [
-        {
+    "content_scripts": [{
             "matches": ["<all_urls>"],
             "exclude_matches": [],
             "js": [
-                "js/vendor/jquery-3.1.1.min.js",
-                "js/vendor/mousetrap.min.js",
-                "js/contentScripts/main.js",
-                "js/contentScripts/general.js"
+                "js/contentScripts/main.bundle.js",
+                "js/contentScripts/general.bundle.js"
             ]
         },
         {
             "matches": ["https://www.google.com/search?*"],
             "exclude_matches": [],
             "js": [
-                "js/contentScripts/google.js"
+                "js/contentScripts/google.bundle.js"
             ]
         }
     ],
     "background": {
         "scripts": [
-            "js/background/background_util.js",
-            "js/background/background_listenForReload.js",
-            "js/background/background.js"
+            "js/background/background.bundle.js"
         ],
         "persistent": false
     }

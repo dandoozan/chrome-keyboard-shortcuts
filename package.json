@@ -1,0 +1,22 @@
+{
+  "name": "chromekeyboardshortcuts",
+  "version": "1.0.0",
+  "description": "",
+  "dependencies": {
+    "bootstrap": "^4.1.3",
+    "jquery": "^3.3.1",
+    "lodash": "^4.17.11",
+    "mousetrap": "^1.6.2"
+  },
+  "devDependencies": {
+    "clean-webpack-plugin": "^0.1.19",
+    "copy-webpack-plugin": "^4.6.0",
+    "webpack": "^4.23.1",
+    "webpack-cli": "^3.1.2"
+  },
+  "scripts": {
+    "build": "webpack --mode development"
+  },
+  "author": "",
+  "license": "ISC"
+}

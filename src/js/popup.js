@@ -1,3 +1,5 @@
+const $ = require('jquery');
+
 const SELECTORS = {
     KEYBOARD_SHORTCUTS_TABLE: '#keyboardShortcutsTable',
 }

@@ -1,4 +1,5 @@
 // console.log('dpd here');
+const Mousetrap = require('mousetrap');
 
 var KS = {
     _keyboardShortcuts: [],

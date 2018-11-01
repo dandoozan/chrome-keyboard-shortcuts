@@ -1,3 +1,6 @@
+const u = require('../../../../_CommonChromeExtensions/background_utils');
+// import '../../../_CommonChromeExtensions/background_listenForReload';
+
 const BACKGROUND_FUNCTIONS = {
     closeTabsToTheRight() {
         u.getCurrentTab((currentTab) => {
@@ -26,10 +29,9 @@ const BACKGROUND_FUNCTIONS = {
 
     moveTabToNewWindow() {
         u.getAllSelectedTabs((tabs) => {
-            //todo: redo this to use tabs.move api (so that I'm not reloading
-            //all the tabs when i move them to a new window)
-            u.closeTabs(tabs, () => {
-                u.createNewWindowWithTabs(tabs);
+            const tabIds = tabs.map((tab) => tab.id);
+            u.createNewWindow((window) => {
+                chrome.tabs.move(tabIds, window.id);
             });
         });
     },

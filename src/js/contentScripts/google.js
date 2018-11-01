@@ -1,3 +1,4 @@
+const $ = require('jquery');
 
 KS.add('alt+enter', openAllLinks);
 
