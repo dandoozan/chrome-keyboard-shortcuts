@@ -1,6 +1,7 @@
 // console.log('dpd here');
-const Mousetrap = require('mousetrap');
-const KS = require('./modules/KS');
+import Mousetrap from 'mousetrap';
+import { getKeyboardShortcuts } from './_KeyboardShortcuts';
+
 
 //override the "stopCallback" function so that the keyboard shortcuts work in
 //input fields
@@ -26,7 +27,7 @@ Mousetrap.stopCallback = function (e, element, combo) {
 //add listener from popup
 chrome.extension.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.req === 'getKeyboardShortcuts') {
-        const data = KS.getKeyboardShortcuts();
+        const data = getKeyboardShortcuts();
         console.log('​data=', data);
         sendResponse(data);
     }

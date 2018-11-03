@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/js/background/background.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/js/background.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -109,14 +109,15 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 
 /***/ }),
 
-/***/ "./src/js/background/background.js":
-/*!*****************************************!*\
-  !*** ./src/js/background/background.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/js/background.js":
+/*!******************************!*\
+  !*** ./src/js/background.js ***!
+  \******************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-eval("const u = __webpack_require__(/*! ../../../../_CommonChromeExtensions/background_utils */ \"../_CommonChromeExtensions/background_utils.js\");\n__webpack_require__(/*! ../../../../_CommonChromeExtensions/background_listenForReload */ \"../_CommonChromeExtensions/background_listenForReload.js\");\n\nconst BACKGROUND_FUNCTIONS = {\n    closeTabsToTheRight() {\n        u.getCurrentTab((currentTab) => {\n            const currentTabIndex = currentTab.index;\n            u.getAllTabs((tabs) => {\n                tabs.forEach((tab, index) => {\n                    if (tab.index > currentTabIndex) {\n                        u.closeTab(tab);\n                    }\n                });\n            });\n        });\n    },\n    closeTabsToTheLeft() {\n        u.getCurrentTab((currentTab) => {\n            const currentTabIndex = currentTab.index;\n            u.getAllTabs((tabs) => {\n                tabs.forEach((tab) => {\n                    if (tab.index < currentTabIndex) {\n                        u.closeTab(tab);\n                    }\n                });\n            });\n        });\n    },\n\n    moveTabToNewWindow() {\n        u.getAllSelectedTabs((tabs) => {\n            const tabIds = tabs.map((tab) => tab.id);\n            u.createNewWindow((window) => {\n                chrome.tabs.move(tabIds, window.id);\n            });\n        });\n    },\n\n    moveTabLeft() {\n        u.getCurrentTab((tab) => {\n            chrome.tabs.move(tab.id, {\n                index: tab.index - 1\n            });\n        });\n    },\n    moveTabRight() {\n        u.getCurrentTab((tab) => {\n            chrome.tabs.move(tab.id, {\n                index: tab.index + 1\n            });\n        });\n    }\n};\n\n\nchrome.runtime.onMessage.addListener((request, sender, sendResponse) => {\n    console.log('​request=', request);\n    if (request.action) {\n        BACKGROUND_FUNCTIONS[request.action](request.params);\n    }\n});\n\n//# sourceURL=webpack:///./src/js/background/background.js?");
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _CommonChromeExtensions_background_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../_CommonChromeExtensions/background_utils */ \"../_CommonChromeExtensions/background_utils.js\");\n/* harmony import */ var _CommonChromeExtensions_background_listenForReload__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../_CommonChromeExtensions/background_listenForReload */ \"../_CommonChromeExtensions/background_listenForReload.js\");\n/* harmony import */ var _CommonChromeExtensions_background_listenForReload__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_CommonChromeExtensions_background_listenForReload__WEBPACK_IMPORTED_MODULE_1__);\n\n\n\nconst BACKGROUND_FUNCTIONS = {\n    closeTabsToTheRight() {\n        Object(_CommonChromeExtensions_background_utils__WEBPACK_IMPORTED_MODULE_0__[\"getCurrentTab\"])((currentTab) => {\n            const currentTabIndex = currentTab.index;\n            Object(_CommonChromeExtensions_background_utils__WEBPACK_IMPORTED_MODULE_0__[\"getAllTabs\"])((tabs) => {\n                tabs.forEach((tab, index) => {\n                    if (tab.index > currentTabIndex) {\n                        Object(_CommonChromeExtensions_background_utils__WEBPACK_IMPORTED_MODULE_0__[\"closeTab\"])(tab);\n                    }\n                });\n            });\n        });\n    },\n    closeTabsToTheLeft() {\n        Object(_CommonChromeExtensions_background_utils__WEBPACK_IMPORTED_MODULE_0__[\"getCurrentTab\"])((currentTab) => {\n            const currentTabIndex = currentTab.index;\n            Object(_CommonChromeExtensions_background_utils__WEBPACK_IMPORTED_MODULE_0__[\"getAllTabs\"])((tabs) => {\n                tabs.forEach((tab) => {\n                    if (tab.index < currentTabIndex) {\n                        Object(_CommonChromeExtensions_background_utils__WEBPACK_IMPORTED_MODULE_0__[\"closeTab\"])(tab);\n                    }\n                });\n            });\n        });\n    },\n\n    moveTabToNewWindow() {\n        Object(_CommonChromeExtensions_background_utils__WEBPACK_IMPORTED_MODULE_0__[\"getAllSelectedTabs\"])((tabs) => {\n            const tabIds = tabs.map((tab) => tab.id);\n            Object(_CommonChromeExtensions_background_utils__WEBPACK_IMPORTED_MODULE_0__[\"createNewWindow\"])((window) => {\n                chrome.tabs.move(tabIds, window.id);\n            });\n        });\n    },\n\n    moveTabLeft() {\n        Object(_CommonChromeExtensions_background_utils__WEBPACK_IMPORTED_MODULE_0__[\"getCurrentTab\"])((tab) => {\n            chrome.tabs.move(tab.id, {\n                index: tab.index - 1\n            });\n        });\n    },\n    moveTabRight() {\n        Object(_CommonChromeExtensions_background_utils__WEBPACK_IMPORTED_MODULE_0__[\"getCurrentTab\"])((tab) => {\n            chrome.tabs.move(tab.id, {\n                index: tab.index + 1\n            });\n        });\n    }\n};\n\n\nchrome.runtime.onMessage.addListener((request, sender, sendResponse) => {\n    console.log('​request=', request);\n    if (request.action) {\n        BACKGROUND_FUNCTIONS[request.action](request.params);\n    }\n});\n\n//# sourceURL=webpack:///./src/js/background.js?");
 
 /***/ })
 

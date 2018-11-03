@@ -16,8 +16,8 @@ function generateContentScriptEntries() {
     //read in all the files in srcJs/contentScripts
     const filenames = u.getAllFileNamesInDir(path.join(__dirname, SRC_DIR_NAME, JS_DIR_NAME, CONTENT_SCRIPT_DIR_NAME));
 
-    //filter bc i only need the js files
-    const jsFilenames = filenames.filter((filename) => filename.endsWith('.js'));
+    //filter out the ones starting with '_' AND anything other than '.js' files
+    const jsFilenames = filenames.filter((filename) => !filename.startsWith('_') && filename.endsWith('.js'));
 
     //reduce them to an obj with their name as the key and path as the value
     const entries = jsFilenames.reduce((accum, filename) => {
@@ -30,10 +30,10 @@ function generateContentScriptEntries() {
     return entries;
 }
 
-function generateEntriesObject() {
+function generateEntries() {
     const baseEntriesObj = {
         popup: path.join(__dirname, SRC_DIR_NAME, JS_DIR_NAME, 'popup.js'),
-        background: path.join(__dirname, SRC_DIR_NAME, JS_DIR_NAME, 'background/background.js'),
+        background: path.join(__dirname, SRC_DIR_NAME, JS_DIR_NAME, 'background.js'),
     };
     const contentScriptEntries = generateContentScriptEntries();
     return _.merge(baseEntriesObj, contentScriptEntries);
@@ -54,7 +54,7 @@ function generateOutputFileName(entryInfo) {
 }
 
 module.exports = {
-    entry: generateEntriesObject,
+    entry: generateEntries,
     plugins: [
         new CleanWebpackPlugin([DIST_DIR_NAME]),
         new CopyWebpackPlugin([

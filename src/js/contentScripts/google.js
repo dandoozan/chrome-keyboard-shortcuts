@@ -1,8 +1,8 @@
-const KS = require('../modules/KS');
-const $ = require('jquery');
-require('../init');
+import $ from 'jquery';
+import { add } from './_KeyboardShortcuts';
+import './_init';
 
-KS.add('alt+enter', openAllLinks);
+add('alt+enter', openAllLinks);
 
 function openAllLinks() {
     $('a.klitem').toArray().forEach((el) => {

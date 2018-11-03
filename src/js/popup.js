@@ -1,6 +1,6 @@
-const $ = require('jquery');
-require('bootstrap');
-require('bootstrap/dist/css/bootstrap.min.css');
+import $ from 'jquery';
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const SELECTORS = {
     KEYBOARD_SHORTCUTS_TABLE: '#keyboardShortcutsTable',

@@ -1,26 +1,26 @@
-const u = require('../../../../_CommonChromeExtensions/background_utils');
-require('../../../../_CommonChromeExtensions/background_listenForReload');
+import { getCurrentTab, getAllTabs, closeTab, getAllSelectedTabs, createNewWindow } from '../../../_CommonChromeExtensions/background_utils';
+import '../../../_CommonChromeExtensions/background_listenForReload';
 
 const BACKGROUND_FUNCTIONS = {
     closeTabsToTheRight() {
-        u.getCurrentTab((currentTab) => {
+        getCurrentTab((currentTab) => {
             const currentTabIndex = currentTab.index;
-            u.getAllTabs((tabs) => {
+            getAllTabs((tabs) => {
                 tabs.forEach((tab, index) => {
                     if (tab.index > currentTabIndex) {
-                        u.closeTab(tab);
+                        closeTab(tab);
                     }
                 });
             });
         });
     },
     closeTabsToTheLeft() {
-        u.getCurrentTab((currentTab) => {
+        getCurrentTab((currentTab) => {
             const currentTabIndex = currentTab.index;
-            u.getAllTabs((tabs) => {
+            getAllTabs((tabs) => {
                 tabs.forEach((tab) => {
                     if (tab.index < currentTabIndex) {
-                        u.closeTab(tab);
+                        closeTab(tab);
                     }
                 });
             });
@@ -28,23 +28,23 @@ const BACKGROUND_FUNCTIONS = {
     },
 
     moveTabToNewWindow() {
-        u.getAllSelectedTabs((tabs) => {
+        getAllSelectedTabs((tabs) => {
             const tabIds = tabs.map((tab) => tab.id);
-            u.createNewWindow((window) => {
+            createNewWindow((window) => {
                 chrome.tabs.move(tabIds, window.id);
             });
         });
     },
 
     moveTabLeft() {
-        u.getCurrentTab((tab) => {
+        getCurrentTab((tab) => {
             chrome.tabs.move(tab.id, {
                 index: tab.index - 1
             });
         });
     },
     moveTabRight() {
-        u.getCurrentTab((tab) => {
+        getCurrentTab((tab) => {
             chrome.tabs.move(tab.id, {
                 index: tab.index + 1
             });

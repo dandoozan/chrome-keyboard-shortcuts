@@ -1,11 +1,11 @@
-const KS = require('../modules/KS');
-require('../init');
+import { add } from './_KeyboardShortcuts';
+import './_init';
 
-KS.add('t+e', closeTabsToTheRight);
-KS.add('t+q', () => sendToBackground('closeTabsToTheLeft'));
-KS.add('t+p', moveTabToNewWindow);
-KS.add('t+,', moveTabLeft);
-KS.add('t+.', moveTabRight);
+add('t+e', closeTabsToTheRight);
+add('t+q', () => sendToBackground('closeTabsToTheLeft'));
+add('t+p', moveTabToNewWindow);
+add('t+,', moveTabLeft);
+add('t+.', moveTabRight);
 
 
 function sendToBackground(fnName, params) {
