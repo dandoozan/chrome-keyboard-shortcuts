@@ -1,50 +1,51 @@
-import { getCurrentTab, getAllTabs, closeTab, getAllSelectedTabs, createNewWindow } from '../../../_CommonChromeExtensions/background_utils';
+import { backgroundUtils as bu } from '../../../_CommonChromeExtensions';
 import '../../../_CommonChromeExtensions/background_listenForReload';
 
 const BACKGROUND_FUNCTIONS = {
     closeTabsToTheRight() {
-        getCurrentTab((currentTab) => {
+        bu.getCurrentTab((currentTab) => {
             const currentTabIndex = currentTab.index;
-            getAllTabs((tabs) => {
+            bu.getAllTabs((tabs) => {
                 tabs.forEach((tab, index) => {
                     if (tab.index > currentTabIndex) {
-                        closeTab(tab);
+                        bu.closeTab(tab);
                     }
                 });
             });
         });
     },
     closeTabsToTheLeft() {
-        getCurrentTab((currentTab) => {
+        bu.getCurrentTab((currentTab) => {
             const currentTabIndex = currentTab.index;
-            getAllTabs((tabs) => {
+            bu.getAllTabs((tabs) => {
                 tabs.forEach((tab) => {
                     if (tab.index < currentTabIndex) {
-                        closeTab(tab);
+                        bu.closeTab(tab);
                     }
                 });
             });
         });
     },
 
-    moveTabToNewWindow() {
-        getAllSelectedTabs((tabs) => {
-            const tabIds = tabs.map((tab) => tab.id);
-            createNewWindow((window) => {
-                chrome.tabs.move(tabIds, window.id);
-            });
-        });
-    },
+    //I believe this is broken, so fix it next time I run into needing this functionality 
+    // moveTabToNewWindow() {
+    //     bu.getAllSelectedTabs((tabs) => {
+    //         const tabIds = tabs.map((tab) => tab.id);
+    //         bu.createNewWindow((window) => {
+    //             chrome.tabs.move(tabIds, window.id);
+    //         });
+    //     });
+    // },
 
     moveTabLeft() {
-        getCurrentTab((tab) => {
+        bu.getCurrentTab((tab) => {
             chrome.tabs.move(tab.id, {
                 index: tab.index - 1
             });
         });
     },
     moveTabRight() {
-        getCurrentTab((tab) => {
+        bu.getCurrentTab((tab) => {
             chrome.tabs.move(tab.id, {
                 index: tab.index + 1
             });
