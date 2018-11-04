@@ -11,14 +11,13 @@ module.exports = {
     entry: _.merge({
         popup: path.join(JS_DIR_ABSOLUTE_PATH, 'popup.js'),
         background: path.join(JS_DIR_ABSOLUTE_PATH, 'background.js'),
-    }, w.generateEntriesForAllFilesInDir(CONTENT_SCRIPT_DIR_ABSOLUTE_PATH)),
+    }, w.generateEntriesForAllFilesInDir(CONTENT_SCRIPT_DIR_ABSOLUTE_PATH, '_')),
     plugins: w.generateBasePlugins()
         .concat(w.generateCopyFilesPlugin(FILES_AND_DIRS_TO_COPY_TO_DIST)),
     module: {
-        rules: [{
-            test: /\.css$/,
-            use: ['style-loader', 'css-loader']
-        }]
+        rules: [
+            w.generateCssRule()
+        ],
     },
     output: {
         filename: w.generateOutputFileName,
