@@ -119,6 +119,17 @@ eval("exports = module.exports = __webpack_require__(/*! ../../../css-loader/lib
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js!./src/css/popup.css":
+/*!*****************************************************!*\
+  !*** ./node_modules/css-loader!./src/css/popup.css ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/lib/css-base.js */ \"./node_modules/css-loader/lib/css-base.js\")(false);\n// imports\n\n\n// module\nexports.push([module.i, \"body {\\n    height: 400px;\\n    width: 600px;\\n}\", \"\"]);\n\n// exports\n\n\n//# sourceURL=webpack:///./src/css/popup.css?./node_modules/css-loader");
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/lib/css-base.js":
 /*!*************************************************!*\
   !*** ./node_modules/css-loader/lib/css-base.js ***!
@@ -186,6 +197,17 @@ eval("var g;\n\n// This works in non-strict mode\ng = (function() {\n\treturn th
 
 /***/ }),
 
+/***/ "./src/css/popup.css":
+/*!***************************!*\
+  !*** ./src/css/popup.css ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("\nvar content = __webpack_require__(/*! !../../node_modules/css-loader!./popup.css */ \"./node_modules/css-loader/index.js!./src/css/popup.css\");\n\nif(typeof content === 'string') content = [[module.i, content, '']];\n\nvar transform;\nvar insertInto;\n\n\n\nvar options = {\"hmr\":true}\n\noptions.transform = transform\noptions.insertInto = undefined;\n\nvar update = __webpack_require__(/*! ../../node_modules/style-loader/lib/addStyles.js */ \"./node_modules/style-loader/lib/addStyles.js\")(content, options);\n\nif(content.locals) module.exports = content.locals;\n\nif(false) {}\n\n//# sourceURL=webpack:///./src/css/popup.css?");
+
+/***/ }),
+
 /***/ "./src/js/popup.js":
 /*!*************************!*\
   !*** ./src/js/popup.js ***!
@@ -194,7 +216,7 @@ eval("var g;\n\n// This works in non-strict mode\ng = (function() {\n\treturn th
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ \"./node_modules/jquery/dist/jquery.js\");\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! bootstrap */ \"./node_modules/bootstrap/dist/js/bootstrap.js\");\n/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(bootstrap__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! bootstrap/dist/css/bootstrap.min.css */ \"./node_modules/bootstrap/dist/css/bootstrap.min.css\");\n/* harmony import */ var bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_2__);\n\n\n\n\nconst SELECTORS = {\n    KEYBOARD_SHORTCUTS_TABLE: '#keyboardShortcutsTable',\n}\n\nwindow.onload = function () {\n    chrome.tabs.getSelected(function (tab) {\n        chrome.tabs.sendMessage(tab.id, {\n            req: 'getKeyboardShortcuts',\n            url: tab.url\n        }, function (data) {\n            console.log('​window.onload -> data=', data);\n            //display the data\n            displayPage(data);\n        });\n    });\n}\n\nfunction getTBody() {\n    return jquery__WEBPACK_IMPORTED_MODULE_0___default()(`${SELECTORS.KEYBOARD_SHORTCUTS_TABLE} tbody`);\n}\n\nfunction addKeyboardShortcutToPage(keyboardShortcut) {\n\n    const {keyCombo, action} = keyboardShortcut;\n\n    const tbody = jquery__WEBPACK_IMPORTED_MODULE_0___default()(getTBody());\n\n    const keyComboTd = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<td>').text(keyCombo);\n    const actionTd = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<td>').text(action);\n\n    const tr = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<tr>');\n    tr.append(keyComboTd);\n    tr.append(actionTd);\n    tbody.append(tr);\n}\n\nfunction displayPage(keyboardShortcuts) {\n    for (const keyboardShortcut of keyboardShortcuts) {\n        addKeyboardShortcutToPage(keyboardShortcut);\n    }\n}\n\n//# sourceURL=webpack:///./src/js/popup.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ \"./node_modules/jquery/dist/jquery.js\");\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! bootstrap */ \"./node_modules/bootstrap/dist/js/bootstrap.js\");\n/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(bootstrap__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! bootstrap/dist/css/bootstrap.min.css */ \"./node_modules/bootstrap/dist/css/bootstrap.min.css\");\n/* harmony import */ var bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var _css_popup_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../css/popup.css */ \"./src/css/popup.css\");\n/* harmony import */ var _css_popup_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_css_popup_css__WEBPACK_IMPORTED_MODULE_3__);\n\n\n\n\n\nconst SELECTORS = {\n    KEYBOARD_SHORTCUTS_TABLE: '#keyboardShortcutsTable',\n}\n\nwindow.onload = function () {\n    chrome.tabs.getSelected(function (tab) {\n        chrome.tabs.sendMessage(tab.id, {\n            req: 'getKeyboardShortcuts',\n            url: tab.url\n        }, function (data) {\n            console.log('​window.onload -> data=', data);\n            //display the data\n            displayPage(data);\n        });\n    });\n}\n\nfunction getTBody() {\n    return jquery__WEBPACK_IMPORTED_MODULE_0___default()(`${SELECTORS.KEYBOARD_SHORTCUTS_TABLE} tbody`);\n}\n\nfunction addKeyboardShortcutToPage(keyboardShortcut) {\n\n    const {keyCombo, action} = keyboardShortcut;\n\n    const tbody = jquery__WEBPACK_IMPORTED_MODULE_0___default()(getTBody());\n\n    const keyComboTd = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<td>').text(keyCombo);\n    const actionTd = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<td>').text(action);\n\n    const tr = jquery__WEBPACK_IMPORTED_MODULE_0___default()('<tr>');\n    tr.append(keyComboTd);\n    tr.append(actionTd);\n    tbody.append(tr);\n}\n\nfunction displayPage(keyboardShortcuts) {\n    for (const keyboardShortcut of keyboardShortcuts) {\n        addKeyboardShortcutToPage(keyboardShortcut);\n    }\n}\n\n//# sourceURL=webpack:///./src/js/popup.js?");
 
 /***/ })
 

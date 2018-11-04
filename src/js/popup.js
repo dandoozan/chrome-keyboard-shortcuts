@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../css/popup.css';
 
 const SELECTORS = {
     KEYBOARD_SHORTCUTS_TABLE: '#keyboardShortcutsTable',
