@@ -1,33 +1,36 @@
-import { backgroundUtils as bu } from '../../../_CommonChromeExtensions';
-import '../../../_CommonChromeExtensions/background_listenForReload';
+import {
+    background as b
+} from '../../../_CommonChromeExtensions';
+
+b.listenForReload();
 
 const BACKGROUND_FUNCTIONS = {
     closeTabsToTheRight() {
-        bu.getCurrentTab((currentTab) => {
+        b.getCurrentTab((currentTab) => {
             const currentTabIndex = currentTab.index;
-            bu.getAllTabs((tabs) => {
+            b.getAllTabs((tabs) => {
                 tabs.forEach((tab, index) => {
                     if (tab.index > currentTabIndex) {
-                        bu.closeTab(tab);
+                        b.closeTab(tab);
                     }
                 });
             });
         });
     },
     closeTabsToTheLeft() {
-        bu.getCurrentTab((currentTab) => {
+        b.getCurrentTab((currentTab) => {
             const currentTabIndex = currentTab.index;
-            bu.getAllTabs((tabs) => {
+            b.getAllTabs((tabs) => {
                 tabs.forEach((tab) => {
                     if (tab.index < currentTabIndex) {
-                        bu.closeTab(tab);
+                        b.closeTab(tab);
                     }
                 });
             });
         });
     },
 
-    //I believe this is broken, so fix it next time I run into needing this functionality 
+    //I believe this is broken, so fix it next time I run into needing this functionality
     // moveTabToNewWindow() {
     //     bu.getAllSelectedTabs((tabs) => {
     //         const tabIds = tabs.map((tab) => tab.id);
@@ -38,14 +41,14 @@ const BACKGROUND_FUNCTIONS = {
     // },
 
     moveTabLeft() {
-        bu.getCurrentTab((tab) => {
+        b.getCurrentTab((tab) => {
             chrome.tabs.move(tab.id, {
                 index: tab.index - 1
             });
         });
     },
     moveTabRight() {
-        bu.getCurrentTab((tab) => {
+        b.getCurrentTab((tab) => {
             chrome.tabs.move(tab.id, {
                 index: tab.index + 1
             });
