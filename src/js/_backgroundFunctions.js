@@ -27,9 +27,10 @@ export function closeTabsToTheLeft() {
 
 export function moveTabsToNewWindow() {
     b.getAllSelectedTabs((tabs) => {
-        const [ firstTab, ...restOfTabs ] = tabs;
-        //first, create the window from the first tab
-        b.moveTabToNewWIndow(firstTab, (window) => {
+        const [firstTab, ...restOfTabs] = tabs;
+        //first, create the window from the first tab (bc you can't create a
+        //window with multiple tabs)
+        b.moveTabToNewWindow(firstTab, (window) => {
             //then, move the rest of the tabs over to the new window
             b.moveTabsToExistingWindow(restOfTabs, window.id);
         });
