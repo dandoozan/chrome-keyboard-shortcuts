@@ -26,12 +26,12 @@ function getTBody() {
 
 function addKeyboardShortcutToPage(keyboardShortcut) {
 
-    const {keyCombo, action} = keyboardShortcut;
+    const {keyCombo, actionName} = keyboardShortcut;
 
     const tbody = $(getTBody());
 
     const keyComboTd = $('<td>').text(keyCombo);
-    const actionTd = $('<td>').text(action);
+    const actionTd = $('<td>').text(actionName);
 
     const tr = $('<tr>');
     tr.append(keyComboTd);

@@ -1,6 +1,4 @@
-import {
-    background as b
-} from '../../../_CommonChromeExtensions';
+import { background as b } from '../../../_CommonChromeExtensions';
 
 b.listenForReload();
 
