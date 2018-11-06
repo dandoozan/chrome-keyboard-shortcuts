@@ -6,6 +6,8 @@ add('t+q', 'closeTabsToTheLeft', () => sendToBackground('closeTabsToTheLeft'));
 add('t+p', 'moveTabsToNewWindow', () => sendToBackground('moveTabsToNewWindow'));
 add('t+,', 'moveTabLeft', () => sendToBackground('moveTabLeft'));
 add('t+.', 'moveTabRight', () => sendToBackground('moveTabRight'));
+add('t+right', 'moveTabsToRightSide', () => sendToBackground('moveTabsToRightSide'));
+add('t+left', 'moveTabsToLeftSide', () => sendToBackground('moveTabsToLeftSide'));
 
 
 function sendToBackground(fnName, params) {
