@@ -21,8 +21,9 @@ export async function closeTabsToTheLeft() {
     });
 }
 
-export async function moveTabsToNewWindow() {
-    const [firstTab, ...restOfTabs] = await b.getAllSelectedTabs();
+export async function moveTabsToNewWindow(tabs) {
+    //if no tabs are passed in, get the currently selected tabs
+    const [firstTab, ...restOfTabs] = tabs || await b.getAllSelectedTabs();
 
     //first, create the window from the first tab (bc you can't create a
     //window with multiple tabs)
@@ -30,26 +31,58 @@ export async function moveTabsToNewWindow() {
 
     //then, move the rest of the tabs over to the new window
     if (restOfTabs.length > 0) {
-        await b.moveTabsToExistingWindow(restOfTabs, window.id);
+        await b.moveTabsToWindow(restOfTabs, window);
+    }
+    return window;
+}
+export async function moveTabsToNewWindowOnTheRight(tabs) {
+    //if no tabs are passed in, get the currently selected tabs
+    const [firstTab, ...restOfTabs] = tabs || await b.getAllSelectedTabs();
+
+    //first, create the window from the first tab (bc you can't create a
+    //window with multiple tabs)
+    const window = await b.moveTabToNewWindowOnTheRight(firstTab);
+
+    //then, move the rest of the tabs over to the new window
+    if (restOfTabs.length > 0) {
+        await b.moveTabsToWindow(restOfTabs, window);
     }
     return window;
 }
 
+async function splitFullscreenWindowToRight(window) {
+    await b.setFullscreenOff(window);
+    await b.moveWindowToLeftSide(window);
+
+    const selectedTabs = await b.getAllSelectedTabs();
+    await moveTabsToNewWindowOnTheRight(selectedTabs);
+}
+
 export async function moveTabsToRightSide() {
     const currentWindow = await b.getCurrentWindow();
-    await b.setFullscreenOff(currentWindow);
-    await b.moveWindowToLeftSide(currentWindow);
 
-    const newWindow = await moveTabsToNewWindow();
-    await b.moveWindowToRightSide(newWindow);
-}
-export async function moveTabsToLeftSide() {
-    const currentWindow = await b.getCurrentWindow();
-    await b.setFullscreenOff(currentWindow);
-    await b.moveWindowToRightSide(currentWindow);
+    //if the current window is fullscreen, handle this special case by splitting
+    //it and moving the selected tabs to the right side
+    if (await b.isWindowFullscreen(currentWindow)) {
+        splitFullscreenWindowToRight(currentWindow);
+    } else {
+        const selectedTabs = await b.getAllSelectedTabs();
 
-    const newWindow = await moveTabsToNewWindow();
-    await b.moveWindowToLeftSide(newWindow);
+        //if there is already a half-size window on the right side, move the
+        //selected tabs to that window
+        const windowsOnRightSide = await b.getWindowsOnRightSideOfScreen();
+        if (windowsOnRightSide.length > 0) {
+            //move the tabs to the first window on the right--this may not be
+            //what i want, but i think it will work for most cases.  If i run
+            //into an issue where this doesn't work, then try to come up with a
+            //way of knowing which window to move it to (maybe by most recent
+            //focused of something)
+            const firstWindowOnRightSide = windowsOnRightSide[0];
+            b.moveTabsToWindow(selectedTabs, firstWindowOnRightSide);
+        } else { //otherwise, create a half-size window on the right and move the selected tabs there
+            await moveTabsToNewWindowOnTheRight(selectedTabs);
+        }
+    }
 }
 
 export async function moveTabLeft() {
