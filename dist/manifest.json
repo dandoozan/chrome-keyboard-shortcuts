@@ -21,15 +21,6 @@
     "content_scripts": [
         {
             "matches": [
-                "<all_urls>"
-            ],
-            "exclude_matches": [],
-            "js": [
-                "js/contentScripts/general.bundle.js"
-            ]
-        },
-        {
-            "matches": [
                 "https://www.google.com/search?*"
             ],
             "exclude_matches": [],

@@ -85,15 +85,19 @@ export async function moveTabsToRightSide() {
     }
 }
 
-export async function moveTabLeft() {
-    const tab = await b.getCurrentTab();
-    chrome.tabs.move(tab.id, {
-        index: tab.index - 1
+export function moveTabLeft() {
+    return new Promise(async (resolve, reject) => {
+        const tab = await b.getCurrentTab();
+        chrome.tabs.move(tab.id, {
+            index: tab.index - 1
+        }, resolve);
     });
 }
-export async function moveTabRight() {
-    const tab = await b.getCurrentTab();
-    chrome.tabs.move(tab.id, {
-        index: tab.index + 1
+export function moveTabRight() {
+    return new Promise(async (resolve, reject) => {
+        const tab = await b.getCurrentTab();
+        chrome.tabs.move(tab.id, {
+            index: tab.index + 1
+        }, resolve);
     });
 }
