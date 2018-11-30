@@ -14,18 +14,27 @@ function getKeyboardShortcuts() {
     ];
 }
 
-function registerKeyboardShortcut(keyCombo, fnName, params) {
+function sendToBackground(ksObj) {
+    chrome.runtime.sendMessage(ksObj, (response) => {
+        //do nothing
+    });
+}
+
+function registerKeyboardShortcut(ksObj) {
+    const keyCombo = ksObj.keyCombo;
     Mousetrap.bind(keyCombo, async (e, kcmbo) => {
-        await actions[fnName](params);
+        sendToBackground(ksObj);
         window.close();
         return false;
     });
 }
 
+//---------- Main ----------
+
 //register the keyboard shortcuts
 const keyboardShortcuts = getKeyboardShortcuts();
-for (const { keyCombo, fnName, params } of keyboardShortcuts) {
-    registerKeyboardShortcut(keyCombo, fnName, params);
+for (const ksObj of keyboardShortcuts) {
+    registerKeyboardShortcut(ksObj);
 }
 
 
