@@ -33,6 +33,6 @@
         "scripts": [
             "js/background.bundle.js"
         ],
-        "persistent": false
+        "persistent": true
     }
 }
