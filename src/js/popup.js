@@ -11,6 +11,7 @@ function getKeyboardShortcuts() {
         { keyCombo: 'e', fnName: 'closeTabsToTheRight', },
         { keyCombo: 'q', fnName: 'closeTabsToTheLeft', },
         { keyCombo: 'p', fnName: 'moveTabsToNewWindow', },
+        { keyCombo: '=', fnName: 'duplicateTabs', },
     ];
 }
 

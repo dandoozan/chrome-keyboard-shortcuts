@@ -101,3 +101,13 @@ export function moveTabRight() {
         }, resolve);
     });
 }
+
+export async function duplicateTabs() {
+    const tabs = await b.getAllSelectedTabs();
+    const tabIds = tabs.map((tab) => tab.id);
+
+    for (let i = 0; i < tabIds.length; i++) {
+        const tabId = tabIds[i];
+        await b.duplicateTab(tabId);
+    }
+}
