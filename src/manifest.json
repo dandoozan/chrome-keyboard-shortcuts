@@ -4,16 +4,16 @@
     "description": "",
     "myConfig": {
         "keyboard_shortcuts": [
-            { "keyCombo": ",", "fnName": "moveTabLeft" },
-            { "keyCombo": ".", "fnName": "moveTabRight" },
-            { "keyCombo": "right", "fnName": "moveTabsToRightSide" },
-            { "keyCombo": "left", "fnName": "moveTabsToLeftSide" },
-            { "keyCombo": "e", "fnName": "closeTabsToTheRight" },
-            { "keyCombo": "q", "fnName": "closeTabsToTheLeft" },
-            { "keyCombo": "p", "fnName": "moveTabsToNewWindow" },
-            { "keyCombo": "=", "fnName": "duplicateTabs" },
+            { "keyCombo": "`", "fnName": "moveTabLeft" },
+            { "keyCombo": "1", "fnName": "moveTabRight" },
+            { "keyCombo": "2", "fnName": "moveTabsToRightSide" },
+            { "keyCombo": "3", "fnName": "moveTabsToLeftSide" },
+            { "keyCombo": "4", "fnName": "closeTabsToTheRight" },
+            { "keyCombo": "6", "fnName": "closeTabsToTheLeft" },
+            { "keyCombo": "7", "fnName": "moveTabsToNewWindow" },
+            { "keyCombo": "8", "fnName": "duplicateTabs" },
             {
-                "keyCombo": "8",
+                "keyCombo": "9",
                 "fnName": "reloadExtension",
                 "args": ["iongmaeonendlpdceflfonepclmfgcee"]
             }
