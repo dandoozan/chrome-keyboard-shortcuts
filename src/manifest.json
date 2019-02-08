@@ -2,12 +2,18 @@
     "name": "ChromeKeyboardShortcuts",
     "version": "0.1",
     "description": "",
-    "permissions": [
-        "system.display",
-        "tabs",
-        "<all_urls>"
+    "keyboard_shortcuts": [
+        { "keyCombo": ",", "fnName": "moveTabLeft" },
+        { "keyCombo": ".", "fnName": "moveTabRight" },
+        { "keyCombo": "right", "fnName": "moveTabsToRightSide" },
+        { "keyCombo": "left", "fnName": "moveTabsToLeftSide" },
+        { "keyCombo": "e", "fnName": "closeTabsToTheRight" },
+        { "keyCombo": "q", "fnName": "closeTabsToTheLeft" },
+        { "keyCombo": "p", "fnName": "moveTabsToNewWindow" },
+        { "keyCombo": "=", "fnName": "duplicateTabs" }
     ],
-    "content_security_policy": "script-src 'self' 'unsafe-eval' https://www.google.com; object-src 'self'",
+    "permissions": ["system.display", "tabs", "<all_urls>"],
+    "content_security_policy": "script-src 'self' 'unsafe-eval' https://www.google.com; object-src self'",
     "manifest_version": 2,
     "browser_action": {
         "default_icon": "images/icon.png",
@@ -20,19 +26,13 @@
     },
     "content_scripts": [
         {
-            "matches": [
-                "https://www.google.com/search?*"
-            ],
+            "matches": ["https://www.google.com/search?*"],
             "exclude_matches": [],
-            "js": [
-                "js/contentScripts/google.bundle.js"
-            ]
+            "js": ["js/contentScripts/google.bundle.js"]
         }
     ],
     "background": {
-        "scripts": [
-            "js/background.bundle.js"
-        ],
+        "scripts": ["js/background.bundle.js"],
         "persistent": true
     }
 }

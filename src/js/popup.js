@@ -1,18 +1,8 @@
 import Mousetrap from 'mousetrap';
-import * as actions from './_actions';
+import { background as b } from '../../../_CommonChromeExtensions';
 
 function getKeyboardShortcuts() {
-    //todo: move these to the manifest or some other config location
-    return [
-        { keyCombo: ',', fnName: 'moveTabLeft', },
-        { keyCombo: '.', fnName: 'moveTabRight', },
-        { keyCombo: 'right', fnName: 'moveTabsToRightSide', },
-        { keyCombo: 'left', fnName: 'moveTabsToLeftSide', },
-        { keyCombo: 'e', fnName: 'closeTabsToTheRight', },
-        { keyCombo: 'q', fnName: 'closeTabsToTheLeft', },
-        { keyCombo: 'p', fnName: 'moveTabsToNewWindow', },
-        { keyCombo: '=', fnName: 'duplicateTabs', },
-    ];
+    return b.getManifest().keyboard_shortcuts;
 }
 
 function sendToBackground(ksObj) {

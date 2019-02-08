@@ -1,6 +1,6 @@
 const path = require('path');
 const _ = require('lodash');
-const w = require('../../CommonJavaScript').webpack;
+const w = require('../../_CommonJavaScript').webpack;
 
 const SRC_DIR_ABSOLUTE_PATH = path.join(__dirname, 'src');
 const JS_DIR_ABSOLUTE_PATH = path.join(SRC_DIR_ABSOLUTE_PATH, 'js');
