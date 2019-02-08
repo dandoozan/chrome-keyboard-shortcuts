@@ -125,6 +125,12 @@ export async function duplicateTabs() {
 }
 
 export function reloadExtension(extensionId) {
-    //todo: put the magic string "dpd_reloadExtension" in the manifest file
-    chrome.runtime.sendMessage(extensionId, { msg: 'dpd_reloadExtension' });
+    if (extensionId === 'me') {
+        //reload myself
+        chrome.runtime.reload();
+    } else {
+        //send a msg to the other extension to reload themselves
+        //todo: put the magic string "dpd_reloadExtension" in the manifest file
+        chrome.runtime.sendMessage(extensionId, { msg: 'dpd_reloadExtension' });
+    }
 }

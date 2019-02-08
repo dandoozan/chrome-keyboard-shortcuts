@@ -16,6 +16,11 @@
                 "keyCombo": "9",
                 "fnName": "reloadExtension",
                 "args": ["iongmaeonendlpdceflfonepclmfgcee"]
+            },
+            {
+                "keyCombo": "0",
+                "fnName": "reloadExtension",
+                "args": ["me"]
             }
         ]
     },
