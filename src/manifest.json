@@ -2,21 +2,23 @@
     "name": "ChromeKeyboardShortcuts",
     "version": "0.1",
     "description": "",
-    "keyboard_shortcuts": [
-        { "keyCombo": ",", "fnName": "moveTabLeft" },
-        { "keyCombo": ".", "fnName": "moveTabRight" },
-        { "keyCombo": "right", "fnName": "moveTabsToRightSide" },
-        { "keyCombo": "left", "fnName": "moveTabsToLeftSide" },
-        { "keyCombo": "e", "fnName": "closeTabsToTheRight" },
-        { "keyCombo": "q", "fnName": "closeTabsToTheLeft" },
-        { "keyCombo": "p", "fnName": "moveTabsToNewWindow" },
-        { "keyCombo": "=", "fnName": "duplicateTabs" },
-        {
-            "keyCombo": "8",
-            "fnName": "reloadExtension",
-            "args": ["iongmaeonendlpdceflfonepclmfgcee"]
-        }
-    ],
+    "myConfig": {
+        "keyboard_shortcuts": [
+            { "keyCombo": ",", "fnName": "moveTabLeft" },
+            { "keyCombo": ".", "fnName": "moveTabRight" },
+            { "keyCombo": "right", "fnName": "moveTabsToRightSide" },
+            { "keyCombo": "left", "fnName": "moveTabsToLeftSide" },
+            { "keyCombo": "e", "fnName": "closeTabsToTheRight" },
+            { "keyCombo": "q", "fnName": "closeTabsToTheLeft" },
+            { "keyCombo": "p", "fnName": "moveTabsToNewWindow" },
+            { "keyCombo": "=", "fnName": "duplicateTabs" },
+            {
+                "keyCombo": "8",
+                "fnName": "reloadExtension",
+                "args": ["iongmaeonendlpdceflfonepclmfgcee"]
+            }
+        ]
+    },
     "permissions": ["system.display", "tabs", "<all_urls>"],
     "content_security_policy": "script-src 'self' 'unsafe-eval' https://www.google.com; object-src self'",
     "manifest_version": 2,

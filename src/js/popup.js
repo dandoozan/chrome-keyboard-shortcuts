@@ -2,7 +2,7 @@ import Mousetrap from 'mousetrap';
 import { background as b } from '../../../_CommonChromeExtensions';
 
 function getKeyboardShortcuts() {
-    return b.getManifest().keyboard_shortcuts;
+    return b.getManifest().myConfig.keyboard_shortcuts;
 }
 
 function sendToBackground(ksObj) {
