@@ -19,7 +19,8 @@
     "webpack-cli": "^3.1.2"
   },
   "scripts": {
-    "build": "webpack --mode development"
+    "build": "webpack --mode development",
+    "watch": "webpack -w --mode development"
   },
   "author": "",
   "license": "ISC"
