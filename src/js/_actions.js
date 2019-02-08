@@ -14,7 +14,7 @@ export async function closeTabsToTheLeft() {
     const currentTab = await b.getCurrentTab();
     const currentTabIndex = currentTab.index;
     const tabs = await b.getAllTabs();
-    tabs.forEach(async (tab) => {
+    tabs.forEach(async tab => {
         if (tab.index < currentTabIndex) {
             await b.closeTab(tab);
         }
@@ -23,7 +23,7 @@ export async function closeTabsToTheLeft() {
 
 export async function moveTabsToNewWindow(tabs) {
     //if no tabs are passed in, get the currently selected tabs
-    const [firstTab, ...restOfTabs] = tabs || await b.getAllSelectedTabs();
+    const [firstTab, ...restOfTabs] = tabs || (await b.getAllSelectedTabs());
 
     //first, create the window from the first tab (bc you can't create a
     //window with multiple tabs)
@@ -37,7 +37,7 @@ export async function moveTabsToNewWindow(tabs) {
 }
 export async function moveTabsToNewWindowOnTheRight(tabs) {
     //if no tabs are passed in, get the currently selected tabs
-    const [firstTab, ...restOfTabs] = tabs || await b.getAllSelectedTabs();
+    const [firstTab, ...restOfTabs] = tabs || (await b.getAllSelectedTabs());
 
     //first, create the window from the first tab (bc you can't create a
     //window with multiple tabs)
@@ -79,7 +79,8 @@ export async function moveTabsToRightSide() {
             //focused of something)
             const firstWindowOnRightSide = windowsOnRightSide[0];
             b.moveTabsToWindow(selectedTabs, firstWindowOnRightSide);
-        } else { //otherwise, create a half-size window on the right and move the selected tabs there
+        } else {
+            //otherwise, create a half-size window on the right and move the selected tabs there
             await moveTabsToNewWindowOnTheRight(selectedTabs);
         }
     }
@@ -88,26 +89,39 @@ export async function moveTabsToRightSide() {
 export function moveTabLeft() {
     return new Promise(async (resolve, reject) => {
         const tab = await b.getCurrentTab();
-        chrome.tabs.move(tab.id, {
-            index: tab.index - 1
-        }, resolve);
+        chrome.tabs.move(
+            tab.id,
+            {
+                index: tab.index - 1,
+            },
+            resolve
+        );
     });
 }
 export function moveTabRight() {
     return new Promise(async (resolve, reject) => {
         const tab = await b.getCurrentTab();
-        chrome.tabs.move(tab.id, {
-            index: tab.index + 1
-        }, resolve);
+        chrome.tabs.move(
+            tab.id,
+            {
+                index: tab.index + 1,
+            },
+            resolve
+        );
     });
 }
 
 export async function duplicateTabs() {
     const tabs = await b.getAllSelectedTabs();
-    const tabIds = tabs.map((tab) => tab.id);
+    const tabIds = tabs.map(tab => tab.id);
 
     for (let i = 0; i < tabIds.length; i++) {
         const tabId = tabIds[i];
         await b.duplicateTab(tabId);
     }
+}
+
+export function reloadExtension(extensionId) {
+    //todo: put the magic string "dpd_reloadExtension" in the manifest file
+    chrome.runtime.sendMessage(extensionId, { msg: 'dpd_reloadExtension' });
 }

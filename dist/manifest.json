@@ -10,7 +10,12 @@
         { "keyCombo": "e", "fnName": "closeTabsToTheRight" },
         { "keyCombo": "q", "fnName": "closeTabsToTheLeft" },
         { "keyCombo": "p", "fnName": "moveTabsToNewWindow" },
-        { "keyCombo": "=", "fnName": "duplicateTabs" }
+        { "keyCombo": "=", "fnName": "duplicateTabs" },
+        {
+            "keyCombo": "r",
+            "fnName": "reloadExtension",
+            "args": ["iongmaeonendlpdceflfonepclmfgcee"]
+        }
     ],
     "permissions": ["system.display", "tabs", "<all_urls>"],
     "content_security_policy": "script-src 'self' 'unsafe-eval' https://www.google.com; object-src self'",

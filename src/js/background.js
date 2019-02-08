@@ -8,6 +8,6 @@ b.listenForReload();
 //an action from the background page context
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.fnName) {
-        actions[request.fnName](request.params);
+        actions[request.fnName](...request.args);
     }
 });
