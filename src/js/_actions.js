@@ -85,6 +85,9 @@ export async function moveTabsToRightSide() {
         }
     }
 }
+export async function moveTabsToLeftSide() {
+    //todo: fill this in
+}
 
 export function moveTabLeft() {
     return new Promise(async (resolve, reject) => {
