@@ -12,7 +12,7 @@
         { "keyCombo": "p", "fnName": "moveTabsToNewWindow" },
         { "keyCombo": "=", "fnName": "duplicateTabs" },
         {
-            "keyCombo": "r",
+            "keyCombo": "8",
             "fnName": "reloadExtension",
             "args": ["iongmaeonendlpdceflfonepclmfgcee"]
         }
