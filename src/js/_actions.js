@@ -114,6 +114,9 @@ export function moveTabRight() {
     });
 }
 
+export async function createTab(url) {
+    await b.createTab(url);
+}
 export async function duplicateTabs() {
     const tabs = await b.getAllSelectedTabs();
     const tabIds = tabs.map(tab => tab.id);

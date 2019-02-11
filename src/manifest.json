@@ -21,6 +21,36 @@
                 "keyCombo": "0",
                 "fnName": "reloadExtension",
                 "args": ["me"]
+            },
+            {
+                "keyCombo": "-",
+                "fnName": "createTab",
+                "args": ["https://docs.google.com/spreadsheets/u/0/"]
+            },
+            {
+                "keyCombo": "=",
+                "fnName": "createTab",
+                "args": ["https://docs.google.com/document/u/0/"]
+            },
+            {
+                "keyCombo": "q",
+                "fnName": "createTab",
+                "args": ["https://www.wikipedia.org/"]
+            },
+            {
+                "keyCombo": "w",
+                "fnName": "createTab",
+                "args": ["https://mail.google.com/mail/u/0/"]
+            },
+            {
+                "keyCombo": "e",
+                "fnName": "createTab",
+                "args": ["https://www.google.com/maps"]
+            },
+            {
+                "keyCombo": "r",
+                "fnName": "createTab",
+                "args": ["https://www.youtube.com/"]
             }
         ]
     },
