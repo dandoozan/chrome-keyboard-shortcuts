@@ -103,11 +103,12 @@ export function moveTabLeft() {
 }
 export function moveTabRight() {
     return new Promise(async (resolve, reject) => {
+        const numTabs = (await b.getAllTabs()).length;
         const tab = await b.getCurrentTab();
         chrome.tabs.move(
             tab.id,
             {
-                index: tab.index + 1,
+                index: (tab.index + 1) % numTabs,
             },
             resolve
         );
