@@ -51,6 +51,11 @@
                 "keyCombo": "r",
                 "fnName": "createTab",
                 "args": ["https://www.youtube.com/"]
+            },
+            {
+                "keyCombo": "y",
+                "fnName": "reloadExtension",
+                "args": ["dkphcindnliagdilfiiaffnmmneihmoh"]
             }
         ]
     },
