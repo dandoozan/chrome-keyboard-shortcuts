@@ -76,6 +76,11 @@
             "matches": ["https://www.google.com/search?*"],
             "exclude_matches": [],
             "js": ["js/contentScripts/google.bundle.js"]
+        },
+        {
+            "matches": ["https://www.consumerreports.org/cars/*"],
+            "exclude_matches": [],
+            "js": ["js/contentScripts/consumerreports.bundle.js"]
         }
     ],
     "background": {
