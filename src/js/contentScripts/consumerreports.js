@@ -12,13 +12,23 @@ function removeTrailingSlashIfNecessary(url) {
 }
 
 function openAllLinks() {
-    //open links for all years
-    $('.year-details__row:visible')
+    let windowHref = removeTrailingSlashIfNecessary(window.location.href);
+
+    let pastYears = $('.year-details__row:visible')
         .toArray()
-        .forEach(el => {
-            let windowHref = removeTrailingSlashIfNecessary(
-                window.location.href
-            );
-            window.open(`${windowHref}/${$(el).attr('data-year')}`);
-        });
+        .map(el => $(el).attr('data-year'));
+
+    //reverse the order so that early years open first
+    pastYears = pastYears.reverse();
+
+    //add the current year to get all years
+    let currYear = $($('div.crux-section-header.generation-range__header')[0])
+        .text()
+        .trim();
+    let allYears = [...pastYears, currYear];
+
+    //generate and open links for all years
+    allYears.forEach(year => {
+        window.open(`${windowHref}/${year}`);
+    });
 }
