@@ -5,7 +5,7 @@ import './_init';
 add('alt+enter', 'openAllLinks', openAllLinks);
 
 function openAllLinks() {
-    $('a.klitem').toArray().forEach((el) => {
+    $('g-scrolling-carousel a').toArray().forEach((el) => {
         window.open($(el).attr('href'))
     });
 }
