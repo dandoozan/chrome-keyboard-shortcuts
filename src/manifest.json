@@ -60,7 +60,6 @@
         ]
     },
     "permissions": ["system.display", "tabs", "<all_urls>"],
-    "content_security_policy": "script-src 'self' 'unsafe-eval' https://www.google.com; object-src self'",
     "manifest_version": 2,
     "browser_action": {
         "default_icon": "images/icon.png",
