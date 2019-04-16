@@ -22,4 +22,5 @@ module.exports = {
     output: {
         filename: w.generateOutputFileName,
     },
+    devtool: 'cheap-source-map',
 }
