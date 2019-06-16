@@ -1,10 +1,9 @@
-import { background as b } from '../../../_CommonChromeExtensions';
-import * as backgroundFunctions from './_backgroundFunctions';
+import * as actions from './_actions';
 
-b.listenForReload();
-
+//listen for msgs from content scripts that will be sending a msg so that i run
+//an action from the background page context
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.fnName) {
-        backgroundFunctions[request.fnName](request.params);
+        actions[request.fnName](...(request.args || []))
     }
 });

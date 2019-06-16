@@ -7,21 +7,8 @@ import { getKeyboardShortcuts } from './_KeyboardShortcuts';
 //input fields
 Mousetrap.stopCallback = function (e, element, combo) {
     //just return false to make sure it never stops the callback (ie. all
-    //keyboard shortcuts go through all the time)
+    //keyboard shortcuts go through even when an input element is focused)
     return false;
-
-    //Note: below is the default implementation (gotten from: https://craig.is/killing/mice)
-    /*
-    //if the element has the class "mousetrap" then no need to stop
-    if ((' ' + element.className + ' ').indexOf(' mousetrap ') > -1) {
-        return false;
-    }
-
-    // stop for input, select, and textarea
-    return element.tagName == 'INPUT' || element.tagName == 'SELECT' ||
-    element.tagName == 'TEXTAREA' || (element.contentEditable &&
-    element.contentEditable == 'true');
-    */
 }
 
 //add listener from popup
