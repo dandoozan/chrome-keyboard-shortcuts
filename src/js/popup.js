@@ -1,20 +1,14 @@
 import Mousetrap from 'mousetrap';
+import * as actions from './_actions';
 import * as u from './utils';
 
 function getKeyboardShortcuts() {
     return u.getManifest().myConfig.keyboard_shortcuts;
 }
 
-function sendToBackground(ksObj) {
-    chrome.runtime.sendMessage(ksObj, (response) => {
-        //do nothing
-    });
-}
-
-function registerKeyboardShortcut(ksObj) {
-    const keyCombo = ksObj.keyCombo;
+function registerKeyboardShortcut({ keyCombo, fnName, args = [] }) {
     Mousetrap.bind(keyCombo, async (e, kcmbo) => {
-        sendToBackground(ksObj);
+        await actions[fnName](...args);
         window.close();
         return false;
     });
@@ -27,23 +21,6 @@ const keyboardShortcuts = getKeyboardShortcuts();
 for (const ksObj of keyboardShortcuts) {
     registerKeyboardShortcut(ksObj);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import $ from 'jquery';
 // import 'bootstrap';
@@ -98,4 +75,3 @@ for (const ksObj of keyboardShortcuts) {
 //         addKeyboardShortcutToPage(keyboardShortcut);
 //     }
 // }
-

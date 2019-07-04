@@ -81,9 +81,5 @@
             "exclude_matches": [],
             "js": ["js/contentScripts/consumerreports.bundle.js"]
         }
-    ],
-    "background": {
-        "scripts": ["js/background.bundle.js"],
-        "persistent": true
-    }
+    ]
 }
