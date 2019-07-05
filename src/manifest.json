@@ -3,61 +3,67 @@
     "version": "0.1",
     "description": "",
     "myConfig": {
-        "keyboard_shortcuts": [
-            { "keyCombo": "`", "fnName": "moveTabLeft" },
-            { "keyCombo": "1", "fnName": "moveTabRight" },
-            { "keyCombo": "2", "fnName": "moveTabsToRightSide" },
-            { "keyCombo": "3", "fnName": "moveTabsToLeftSide" },
-            { "keyCombo": "4", "fnName": "closeTabsToTheRight" },
-            { "keyCombo": "6", "fnName": "closeTabsToTheLeft" },
-            { "keyCombo": "7", "fnName": "moveTabsToNewWindow" },
-            { "keyCombo": "8", "fnName": "duplicateTabs" },
-            {
-                "keyCombo": "9",
-                "fnName": "reloadExtension",
-                "args": ["celhpdedpgliimkoajfkkcjhlgggcdig"]
-            },
-            {
-                "keyCombo": "0",
-                "fnName": "reloadExtension",
-                "args": ["me"]
-            },
-            {
-                "keyCombo": "-",
-                "fnName": "createTab",
-                "args": ["https://docs.google.com/spreadsheets/u/0/"]
-            },
-            {
-                "keyCombo": "=",
-                "fnName": "createTab",
-                "args": ["https://docs.google.com/document/u/0/"]
-            },
-            {
-                "keyCombo": "q",
-                "fnName": "createTab",
-                "args": ["https://www.wikipedia.org/"]
-            },
-            {
-                "keyCombo": "w",
-                "fnName": "createTab",
-                "args": ["https://mail.google.com/mail/u/0/"]
-            },
-            {
-                "keyCombo": "e",
-                "fnName": "createTab",
-                "args": ["https://www.google.com/maps"]
-            },
-            {
-                "keyCombo": "r",
-                "fnName": "createTab",
-                "args": ["https://www.youtube.com/"]
-            },
-            {
-                "keyCombo": "y",
-                "fnName": "reloadExtension",
-                "args": ["nnkkjnnnmmdepibankdbmacgcoldaode"]
-            }
-        ]
+        "keyboard_shortcuts": {
+            "browser": [
+                { "keyCombo": "`", "fnName": "moveTabLeft" },
+                { "keyCombo": "1", "fnName": "moveTabRight" },
+                { "keyCombo": "2", "fnName": "moveTabsToRightSide" },
+                { "keyCombo": "3", "fnName": "moveTabsToLeftSide" },
+                { "keyCombo": "4", "fnName": "closeTabsToTheRight" },
+                { "keyCombo": "6", "fnName": "closeTabsToTheLeft" },
+                { "keyCombo": "7", "fnName": "moveTabsToNewWindow" },
+                { "keyCombo": "8", "fnName": "duplicateTabs" },
+                {
+                    "keyCombo": "9",
+                    "fnName": "reloadExtension",
+                    "args": ["celhpdedpgliimkoajfkkcjhlgggcdig"]
+                },
+                {
+                    "keyCombo": "0",
+                    "fnName": "reloadExtension",
+                    "args": ["me"]
+                },
+                {
+                    "keyCombo": "-",
+                    "fnName": "createTab",
+                    "args": ["https://docs.google.com/spreadsheets/u/0/"]
+                },
+                {
+                    "keyCombo": "=",
+                    "fnName": "createTab",
+                    "args": ["https://docs.google.com/document/u/0/"]
+                },
+                {
+                    "keyCombo": "q",
+                    "fnName": "createTab",
+                    "args": ["https://www.wikipedia.org/"]
+                },
+                {
+                    "keyCombo": "w",
+                    "fnName": "createTab",
+                    "args": ["https://mail.google.com/mail/u/0/"]
+                },
+                {
+                    "keyCombo": "e",
+                    "fnName": "createTab",
+                    "args": ["https://www.google.com/maps"]
+                },
+                {
+                    "keyCombo": "r",
+                    "fnName": "createTab",
+                    "args": ["https://www.youtube.com/"]
+                },
+                {
+                    "keyCombo": "y",
+                    "fnName": "reloadExtension",
+                    "args": ["nnkkjnnnmmdepibankdbmacgcoldaode"]
+                }
+            ],
+            "google": [{ "keyCombo": "alt+enter", "fnName": "openAllLinks" }],
+            "consumerreports": [
+                { "keyCombo": "alt+enter", "fnName": "openAllLinks" }
+            ]
+        }
     },
     "permissions": ["system.display", "tabs", "<all_urls>"],
     "manifest_version": 2,
@@ -73,13 +79,19 @@
     "content_scripts": [
         {
             "matches": ["https://www.google.com/search?*"],
-            "exclude_matches": [],
-            "js": ["js/contentScripts/google.bundle.js"]
+            "js": [
+                "js/contentScripts/google.bundle.js",
+                "js/contentScripts/main.bundle.js"
+            ],
+            "myConfigKey": "google"
         },
         {
             "matches": ["https://www.consumerreports.org/cars/*"],
-            "exclude_matches": [],
-            "js": ["js/contentScripts/consumerreports.bundle.js"]
+            "js": [
+                "js/contentScripts/consumerreports.bundle.js",
+                "js/contentScripts/main.bundle.js"
+            ],
+            "myConfigKey": "consumerreports"
         }
     ]
 }

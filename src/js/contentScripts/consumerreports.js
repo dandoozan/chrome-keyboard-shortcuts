@@ -1,8 +1,6 @@
+//todo: remove dependence on jquery
 import $ from 'jquery';
-import { add } from './_KeyboardShortcuts';
-import './_init';
-
-add('alt+enter', 'openAllLinks', openAllLinks);
+import { AbstractPageActions } from './AbstractPageActions';
 
 function removeTrailingSlashIfNecessary(url) {
     if (url[url.length - 1] === '/') {
@@ -11,23 +9,29 @@ function removeTrailingSlashIfNecessary(url) {
     return url;
 }
 
-function openAllLinks() {
-    let windowHref = removeTrailingSlashIfNecessary(window.location.href);
+window.PageActions = class extends AbstractPageActions {
+    //todo: move this method to AbstractPageActions
+    static openAllLinks() {
+        console.log(`***openAllLinks consumerreports here`);
+        let windowHref = removeTrailingSlashIfNecessary(window.location.href);
 
-    //get the current year
-    let currYear = $($('div.crux-section-header.generation-range__header')[0])
-        .text()
-        .trim();
+        //get the current year
+        let currYear = $(
+            $('div.crux-section-header.generation-range__header')[0]
+        )
+            .text()
+            .trim();
 
-    //get all past years
-    let pastYears = $('.year-details__row:visible')
-        .toArray()
-        .map(el => $(el).attr('data-year'));
+        //get all past years
+        let pastYears = $('.year-details__row:visible')
+            .toArray()
+            .map(el => $(el).attr('data-year'));
 
-    let allYears = [currYear, ...pastYears];
+        let allYears = [currYear, ...pastYears];
 
-    //generate and open links for all years
-    allYears.forEach(year => {
-        window.open(`${windowHref}/${year}`);
-    });
-}
+        //generate and open links for all years
+        allYears.forEach(year => {
+            window.open(`${windowHref}/${year}`);
+        });
+    }
+};
