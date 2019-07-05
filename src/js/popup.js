@@ -1,26 +1,28 @@
-import Mousetrap from 'mousetrap';
-import * as actions from './_actions';
-import * as u from './utils';
+// import Mousetrap from 'mousetrap';
+// import * as actions from './_actions';
+// import * as u from './utils';
 
-function getKeyboardShortcuts() {
-    return u.getManifest().myConfig.keyboard_shortcuts;
-}
 
-function registerKeyboardShortcut({ keyCombo, fnName, args = [] }) {
-    Mousetrap.bind(keyCombo, async (e, kcmbo) => {
-        await actions[fnName](...args);
-        window.close();
-        return false;
-    });
-}
+
+// function getKeyboardShortcuts() {
+//     return u.getManifest().myConfig.keyboard_shortcuts;
+// }
+
+// function registerKeyboardShortcut({ keyCombo, fnName, args = [] }) {
+//     Mousetrap.bind(keyCombo, async (e, kcmbo) => {
+//         await actions[fnName](...args);
+//         window.close();
+//         return false;
+//     });
+// }
 
 //---------- Main ----------
 
 //register the keyboard shortcuts
-const keyboardShortcuts = getKeyboardShortcuts();
-for (const ksObj of keyboardShortcuts) {
-    registerKeyboardShortcut(ksObj);
-}
+// const keyboardShortcuts = getKeyboardShortcuts();
+// for (const ksObj of keyboardShortcuts) {
+//     registerKeyboardShortcut(ksObj);
+// }
 
 // import $ from 'jquery';
 // import 'bootstrap';

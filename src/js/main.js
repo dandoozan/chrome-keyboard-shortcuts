@@ -1,18 +1,30 @@
 import Mousetrap from 'mousetrap';
-import { getManifest, getMatchesObjectFromManifest } from '../utils';
+import { getManifest, getMatchesObjectFromManifest } from './utils';
 
 //I know I don't need to set this variable, but I'm doing so just
-//to make it clear that I am using the global PageActions intentionally
-const PageActions = window.PageActions;
+//to make it clear that I am using the global Actions intentionally
+const Actions = window.Actions;
 
-function getKeyboardShortcutsForUrl(url) {
+function isPopupPage(url) {
+    return url === `"chrome-extension://${chrome.runtime.id}/popup.html"`;
+}
+
+function getKeyboardShortcutsForPage(url) {
+    let keyboardShortcuts = getManifest().myConfig.keyboard_shortcuts;
+
+    //if the page is the popup, get the browser keyboardShortcuts
+    if (isPopupPage(url)) {
+        return keyboardShortcuts.browser;
+    }
+
+    //else, get the keyboardShortcuts for the specific webpage
     let { myConfigKey } = getMatchesObjectFromManifest(url);
-    return getManifest().myConfig.keyboard_shortcuts[myConfigKey];
+    return keyboardShortcuts[myConfigKey];
 }
 
 function registerKeyboardShortcut({ keyCombo, fnName, args = [] }) {
     Mousetrap.bind(keyCombo, (e, kcmbo) => {
-        PageActions[fnName](...args);
+        Actions[fnName](...args);
         return false; //prevent default
     });
 }
@@ -29,7 +41,7 @@ function registerKeyboardShortcut({ keyCombo, fnName, args = [] }) {
     //register all keyboard shortcuts in the config
     let url = window.location.href;
     console.log('​main -> url=', url);
-    let keyboardShortcuts = getKeyboardShortcutsForUrl(url);
+    let keyboardShortcuts = getKeyboardShortcutsForPage(url);
     console.log('​main -> keyboardShortcuts=', keyboardShortcuts);
     keyboardShortcuts.forEach(keyboardShortcut => {
         registerKeyboardShortcut(keyboardShortcut);

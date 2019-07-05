@@ -59,7 +59,8 @@ function generateOutputFileName(entryInfo) {
 
 module.exports = {
     entry: {
-        popup: path.join(PATH_TO_SRC, JS_DIR_NAME, 'popup.js'),
+        main: path.join(PATH_TO_SRC, JS_DIR_NAME, 'main.js'),
+        BrowserActions: path.join(PATH_TO_SRC, JS_DIR_NAME, 'BrowserActions.js'),
         ...generateEntriesForContentScripts(),
     },
     plugins: [
