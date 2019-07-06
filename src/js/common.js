@@ -1,4 +1,9 @@
 import Mousetrap from 'mousetrap';
+import { getManifest } from './utils';
+
+export function getMyConfig() {
+    return getManifest().my_config;
+}
 
 export function registerKeyboardShortcut(trigger, fn) {
     Mousetrap.bind(trigger, (e, kcmbo) => {

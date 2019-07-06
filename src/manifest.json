@@ -3,6 +3,7 @@
     "version": "0.1",
     "description": "",
     "my_config": {
+        "reload_extension_message": "dpd_reloadExtension",
         "keyboard_shortcuts": {
             "browser": [
                 { "keyCombo": "`", "fnName": "moveTabLeft" },

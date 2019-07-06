@@ -8,6 +8,7 @@ import {
     getScreenWidth,
     getScreenHeight,
 } from './utils';
+import { getMyConfig } from './common';
 
 function closeTabs(tabs) {
     return new Promise((resolve, reject) => {
@@ -249,9 +250,8 @@ export class BrowserActions {
             chrome.runtime.reload();
         } else {
             //send a msg to the other extension to reload themselves
-            //todo: put the magic string "dpd_reloadExtension" in the manifest file
             chrome.runtime.sendMessage(extensionId, {
-                msg: 'dpd_reloadExtension',
+                msg: getMyConfig().reload_extension_message,
             });
         }
     }
