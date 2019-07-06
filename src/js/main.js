@@ -6,7 +6,7 @@ import { getManifest, getMatchesObjectFromManifest } from './utils';
 const Actions = window.Actions;
 
 function isPopupPage(url) {
-    return url === `"chrome-extension://${chrome.runtime.id}/popup.html"`;
+    return url === `chrome-extension://${chrome.runtime.id}/popup.html`;
 }
 
 function getKeyboardShortcutsForPage(url) {

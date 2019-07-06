@@ -53,7 +53,7 @@ window.Actions = class BrowserActions {
         return window;
     }
 
-    async splitFullscreenWindowToRight(window) {
+    static async splitFullscreenWindowToRight(window) {
         await u.setFullscreenOff(window);
         await u.moveWindowToLeftSide(window);
 
@@ -92,7 +92,7 @@ window.Actions = class BrowserActions {
         //todo: fill this in
     }
 
-    moveTabLeft() {
+    static moveTabLeft() {
         return new Promise(async (resolve, reject) => {
             const tab = await u.getCurrentTab();
             chrome.tabs.move(
@@ -104,7 +104,7 @@ window.Actions = class BrowserActions {
             );
         });
     }
-    moveTabRight() {
+    static moveTabRight() {
         return new Promise(async (resolve, reject) => {
             const numTabs = (await u.getAllTabs()).length;
             const tab = await u.getCurrentTab();
@@ -131,7 +131,7 @@ window.Actions = class BrowserActions {
         }
     }
 
-    reloadExtension(extensionId) {
+    static reloadExtension(extensionId) {
         if (extensionId === 'me') {
             //reload myself
             chrome.runtime.reload();
