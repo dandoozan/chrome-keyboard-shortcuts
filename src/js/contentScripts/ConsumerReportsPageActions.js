@@ -1,6 +1,6 @@
 //todo: remove dependence on jquery
 import $ from 'jquery';
-import { PageActions } from './PageActions';
+import { PageActions } from '../PageActions';
 
 function removeTrailingSlashIfNecessary(url) {
     if (url[url.length - 1] === '/') {
@@ -9,7 +9,7 @@ function removeTrailingSlashIfNecessary(url) {
     return url;
 }
 
-window.Actions = class extends PageActions {
+window.Actions = class ConsumerReportsPageActions extends PageActions {
     //todo: move this method to PageActions
     static openAllLinks() {
         console.log(`***openAllLinks consumerreports here`);
