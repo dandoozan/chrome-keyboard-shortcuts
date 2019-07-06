@@ -1,40 +1,138 @@
 import {
-    getCurrentTab,
     getCurrentWindow,
+    getAllWindows,
+    getCurrentTab,
     getAllTabs,
-    closeTab,
     getAllSelectedTabs,
-    moveTabToNewWindow,
-    moveTabsToWindow,
-    getWindowsOnRightSideOfScreen,
-    moveTabToNewWindowOnTheRight,
     isWindowFullscreen,
-    setFullscreenOff,
-    moveWindowToLeftSide,
-    duplicateTab,
-    createTab,
+    getScreenWidth,
+    getScreenHeight,
 } from './utils';
+
+function closeTabs(tabs) {
+    return new Promise((resolve, reject) => {
+        chrome.tabs.remove(tabs.map(tab => tab.id), resolve);
+    });
+}
+
+function setFullscreenOff(window) {
+    return new Promise((resolve, reject) => {
+        chrome.windows.update(window.id, { state: 'normal' }, resolve);
+    });
+}
+
+function duplicateTab(tabId) {
+    return new Promise((resolve, reject) => {
+        chrome.tabs.duplicate(tabId, resolve);
+    });
+}
+
+function createNewWindow(windowOptions) {
+    return new Promise((resolve, reject) => {
+        chrome.windows.create(windowOptions, window => {
+            resolve(window);
+        });
+    });
+}
+
+async function moveTabToNewWindow(tab) {
+    return await createNewWindow({ tabId: tab.id });
+}
+async function moveTabToNewWindowOnTheRight(tab) {
+    return await createNewWindow({
+        tabId: tab.id,
+        left: (await getScreenWidth()) / 2,
+        top: 0,
+        width: (await getScreenWidth()) / 2,
+        height: await getScreenHeight(),
+    });
+}
+
+async function focusTab(tab) {
+    return new Promise((resolve, reject) => {
+        chrome.tabs.update(tab.id, { active: true }, tab => resolve);
+    });
+}
+
+function moveTabsToWindow(tabs, window) {
+    return new Promise((resolve, reject) => {
+        const tabIds = tabs.map(tab => tab.id);
+        chrome.tabs.move(
+            tabIds,
+            { windowId: window.id, index: -1 },
+            async tabOrTabs => {
+                //focus the first tab (otherwise, they're unfocused)
+                await focusTab(
+                    Array.isArray(tabOrTabs) ? tabOrTabs[0] : tabOrTabs
+                );
+                resolve(tabOrTabs);
+            }
+        );
+    });
+}
+
+async function moveWindowToRightSide(window) {
+    return new Promise(async (resolve, reject) => {
+        const options = {
+            left: (await getScreenWidth()) / 2,
+            top: 0,
+            width: (await getScreenWidth()) / 2,
+            height: await getScreenHeight(),
+        };
+        chrome.windows.update(window.id, options, resolve);
+    });
+}
+
+async function moveWindowToLeftSide(window) {
+    return new Promise(async (resolve, reject) => {
+        const options = {
+            left: 0,
+            top: 0,
+            width: (await getScreenWidth()) / 2,
+            height: await getScreenHeight(),
+        };
+        chrome.windows.update(window.id, options, resolve);
+    });
+}
+
+async function isWindowHalfScreenSize(window) {
+    return (
+        window.width === (await getScreenWidth()) / 2 &&
+        window.height === (await getScreenHeight())
+    );
+}
+async function isWindowOnRightSideOfScreen(window) {
+    return (
+        (await isWindowHalfScreenSize(window)) &&
+        window.left === (await getScreenWidth()) / 2
+    );
+}
+
+async function getWindowsOnRightSideOfScreen() {
+    const windows = await getAllWindows();
+    const windowsOnRightSideOfScreen = [];
+    for (const window of windows) {
+        if (await isWindowOnRightSideOfScreen(window)) {
+            windowsOnRightSideOfScreen.push(window);
+        }
+    }
+    return windowsOnRightSideOfScreen;
+}
 
 export class BrowserActions {
     static async closeTabsToTheRight() {
-        const currentTab = await getCurrentTab();
-        const currentTabIndex = currentTab.index;
-        const tabs = await getAllTabs();
-        tabs.forEach(async (tab, index) => {
-            if (tab.index > currentTabIndex) {
-                await closeTab(tab);
-            }
-        });
+        let currentTabIndex = (await getCurrentTab()).index;
+        let tabsToTheRight = (await getAllTabs()).filter(
+            tab => tab.index > currentTabIndex
+        );
+        await closeTabs(tabsToTheRight);
     }
     static async closeTabsToTheLeft() {
-        const currentTab = await getCurrentTab();
-        const currentTabIndex = currentTab.index;
-        const tabs = await getAllTabs();
-        tabs.forEach(async tab => {
-            if (tab.index < currentTabIndex) {
-                await closeTab(tab);
-            }
-        });
+        let currentTabIndex = (await getCurrentTab()).index;
+        let tabsToTheLeft = (await getAllTabs()).filter(
+            tab => tab.index < currentTabIndex
+        );
+        await closeTabs(tabsToTheLeft);
     }
 
     static async moveTabsToNewWindow(tabs) {
@@ -132,15 +230,16 @@ export class BrowserActions {
     }
 
     static async createTab(url) {
-        await createTab(url);
+        return new Promise((resolve, reject) => {
+            chrome.tabs.create({ url }, resolve);
+        });
     }
     static async duplicateTabs() {
         const tabs = await getAllSelectedTabs();
         const tabIds = tabs.map(tab => tab.id);
 
         for (let i = 0; i < tabIds.length; i++) {
-            const tabId = tabIds[i];
-            await duplicateTab(tabId);
+            await duplicateTab(tabIds[i]);
         }
     }
 
