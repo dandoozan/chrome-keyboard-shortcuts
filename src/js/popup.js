@@ -35,13 +35,6 @@ import { BrowserActions } from './BrowserActions';
 //     });
 // }
 
-// Mousetrap.bind('g', (e, kcmbo) => {
-//     chrome.runtime.sendMessage({ fnName: 'moveTabRight' }, (response) => {
-//         //do nothing
-//     });
-//     return false; //prevent default (from the docs: "Returning false here works the same way as jQuery's return false. It prevents the default action and stops the event from bubbling up.")
-// });
-
 // function getTBody() {
 //     return $(`${SELECTORS.KEYBOARD_SHORTCUTS_TABLE} tbody`);
 // }
