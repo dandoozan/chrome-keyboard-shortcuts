@@ -2,7 +2,7 @@
     "name": "ChromeKeyboardShortcuts",
     "version": "0.1",
     "description": "",
-    "myConfig": {
+    "my_config": {
         "keyboard_shortcuts": {
             "browser": [
                 { "keyCombo": "`", "fnName": "moveTabLeft" },
@@ -83,7 +83,7 @@
                 "js/contentScripts/GooglePageActions.bundle.js",
                 "js/main.bundle.js"
             ],
-            "myConfigKey": "google"
+            "my_config_key": "google"
         },
         {
             "matches": ["https://www.consumerreports.org/cars/*"],
@@ -91,7 +91,7 @@
                 "js/contentScripts/ConsumerReportsPageActions.bundle.js",
                 "js/main.bundle.js"
             ],
-            "myConfigKey": "consumerreports"
+            "my_config_key": "consumerreports"
         }
     ]
 }

@@ -10,7 +10,7 @@ function isPopupPage(url) {
 }
 
 function getKeyboardShortcutsForPage(url) {
-    let keyboardShortcuts = getManifest().myConfig.keyboard_shortcuts;
+    let keyboardShortcuts = getManifest().my_config.keyboard_shortcuts;
 
     //if the page is the popup, get the browser keyboardShortcuts
     if (isPopupPage(url)) {
@@ -18,8 +18,8 @@ function getKeyboardShortcutsForPage(url) {
     }
 
     //else, get the keyboardShortcuts for the specific webpage
-    let { myConfigKey } = getMatchesObjectFromManifest(url);
-    return keyboardShortcuts[myConfigKey];
+    let { my_config_key } = getMatchesObjectFromManifest(url);
+    return keyboardShortcuts[my_config_key];
 }
 
 function registerKeyboardShortcut({ keyCombo, fnName, args = [] }) {

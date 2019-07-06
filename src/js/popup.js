@@ -2,10 +2,8 @@
 // import * as actions from './_actions';
 // import * as u from './utils';
 
-
-
 // function getKeyboardShortcuts() {
-//     return u.getManifest().myConfig.keyboard_shortcuts;
+//     return u.getManifest().my_config.keyboard_shortcuts;
 // }
 
 // function registerKeyboardShortcut({ keyCombo, fnName, args = [] }) {
