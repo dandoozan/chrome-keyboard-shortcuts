@@ -81,7 +81,7 @@
             "matches": ["https://www.google.com/search?*"],
             "js": [
                 "js/contentScripts/GooglePageActions.bundle.js",
-                "js/main.bundle.js"
+                "js/contentScripts/main.bundle.js"
             ],
             "my_config_key": "google"
         },
@@ -89,7 +89,7 @@
             "matches": ["https://www.consumerreports.org/cars/*"],
             "js": [
                 "js/contentScripts/ConsumerReportsPageActions.bundle.js",
-                "js/main.bundle.js"
+                "js/contentScripts/main.bundle.js"
             ],
             "my_config_key": "consumerreports"
         }
