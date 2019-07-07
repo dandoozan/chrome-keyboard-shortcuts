@@ -106,8 +106,7 @@ module.exports = {
     resolve: {
         //set "symlinks" to false so that webpack looks for dependencies in this project (not in the symlinked
         //file location).  This allows me to use dependencies (eg. lodash) in my "utils" file (which i symlink
-        //here) and it will use the "lodash" from this project (so i don't have to install it in
-        //the CommonChromeExtensions project)
+        //here) and it will use the "lodash" from this project
         symlinks: false,
     },
 };
