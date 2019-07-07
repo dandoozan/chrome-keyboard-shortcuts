@@ -36,6 +36,34 @@ function generateEntriesForContentScripts() {
     }, {});
 }
 
+function fileExists(pathToFile) {
+    return require('fs').existsSync(pathToFile);
+}
+
+function generateEntries() {
+    let entries = {};
+
+    //add popup if it exists
+    let pathToPopup = path.join(PATH_TO_SRC, JS_DIR_NAME, 'popup.js');
+    if (fileExists(pathToPopup)) {
+        entries.popup = pathToPopup;
+    }
+
+    //add background if it exists
+    let pathToBackground = path.join(PATH_TO_SRC, JS_DIR_NAME, 'background.js');
+    if (fileExists(pathToBackground)) {
+        entries.background = pathToBackground;
+    }
+
+    //add content script files
+    entries = {
+        ...entries,
+        ...generateEntriesForContentScripts(),
+    };
+
+    return entries;
+}
+
 function generateOutputFileName(entryInfo) {
     //this creates the same structure that the entry files have
     const entryParentDirAbsolutePath = entryInfo.chunk.entryModule.context;
@@ -51,10 +79,7 @@ function generateOutputFileName(entryInfo) {
 }
 
 module.exports = {
-    entry: {
-        popup: path.join(PATH_TO_SRC, JS_DIR_NAME, 'popup.js'),
-        ...generateEntriesForContentScripts(),
-    },
+    entry: generateEntries,
     plugins: [
         new CleanWebpackPlugin(['dist']),
         new CopyWebpackPlugin(
