@@ -3,7 +3,7 @@ import { getMatchesObjectFromManifest } from '../utils';
 import { registerKeyboardShortcut, getMyConfig } from '../common';
 
 //I know I don't need to set this variable, but I'm doing so just
-//to make it clear that I am using the global Actions intentionally
+//to make it clear that I'm intentionally using the global Actions
 const Actions = window.Actions;
 
 function getKeyboardShortcutsForUrl(url) {
