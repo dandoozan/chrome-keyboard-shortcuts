@@ -7,7 +7,7 @@ import {
     isWindowFullscreen,
     getScreenWidth,
     getScreenHeight,
-} from './utils';
+} from './helpers/chrome';
 import { getMyConfig } from './common';
 
 function closeTabs(tabs) {
