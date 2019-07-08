@@ -2,7 +2,6 @@ const path = require('path');
 const fs = require('fs');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const { copyToDist } = require('./package.json').myConfig.webpack;
 
 const PATH_TO_SRC = path.join(__dirname, 'src');
 const JS_DIR_NAME = 'js';
@@ -10,6 +9,10 @@ const CONTENT_SCRIPTS_DIR_NAME = 'contentScripts';
 
 function stripFileExtension(fileName) {
     return fileName.substring(0, fileName.lastIndexOf('.'));
+}
+
+function getFilesAndDirsInDir(pathToDir) {
+    return fs.readdirSync(pathToDir);
 }
 
 function generateEntriesForContentScripts() {
@@ -22,11 +25,9 @@ function generateEntriesForContentScripts() {
     //get the files in the contentScripts dir that
     //  -end in ".js"
     //  -do NOT start with "_"
-    let filenames = fs
-        .readdirSync(pathToContentScriptsDir)
-        .filter(
-            fileName => fileName.endsWith('.js') && !fileName.startsWith('_')
-        );
+    let filenames = getFilesAndDirsInDir(pathToContentScriptsDir).filter(
+        filename => filename.endsWith('.js') && !filename.startsWith('_')
+    );
 
     //now reduce them to an obj with their name as the key and path as the value
     return filenames.reduce((obj, filename) => {
@@ -37,7 +38,7 @@ function generateEntriesForContentScripts() {
 }
 
 function fileExists(pathToFile) {
-    return require('fs').existsSync(pathToFile);
+    return fs.existsSync(pathToFile);
 }
 
 function generateEntries() {
@@ -78,12 +79,19 @@ function generateOutputFileName(entryInfo) {
     return path.join(JS_DIR_NAME, outputParentDirName, '[name].bundle.js');
 }
 
+function getFilesToCopy() {
+    //copy all files/dirs in "src" that are NOT "js"
+    return getFilesAndDirsInDir(PATH_TO_SRC).filter(
+        file => file !== JS_DIR_NAME
+    );
+}
+
 module.exports = {
     entry: generateEntries,
     plugins: [
         new CleanWebpackPlugin(['dist']),
         new CopyWebpackPlugin(
-            copyToDist.map(fileOrDirName => ({
+            getFilesToCopy().map(fileOrDirName => ({
                 from: path.join('src', fileOrDirName),
                 to: fileOrDirName, //I have to specify "to" in order to get the same dir hierarchy structure when the contents are copied over to dist
                 ignore: ['.DS_Store'],

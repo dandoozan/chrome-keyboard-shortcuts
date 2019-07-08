@@ -2,16 +2,6 @@
     "name": "chromekeyboardshortcuts",
     "version": "1.0.0",
     "description": "",
-    "myConfig": {
-        "webpack": {
-            "copyToDist": [
-                "manifest.json",
-                "popup.html",
-                "images",
-                "css"
-            ]
-        }
-    },
     "dependencies": {
         "jquery": "^3.3.1",
         "mousetrap": "^1.6.2"
