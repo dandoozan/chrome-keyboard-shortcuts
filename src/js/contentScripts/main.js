@@ -1,5 +1,5 @@
 import Mousetrap from 'mousetrap';
-import { getMatchesObjectFromManifest } from '../helpers/chrome';
+import { getMatchesObjectFromManifest } from '../helpers/extension';
 import { registerKeyboardShortcut, getMyConfig } from '../common';
 
 //I know I don't need to set this variable, but I'm doing so just

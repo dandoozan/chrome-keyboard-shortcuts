@@ -1,5 +1,5 @@
 import Mousetrap from 'mousetrap';
-import { getManifest } from './helpers/chrome';
+import { getManifest } from './helpers/extension';
 
 export function getMyConfig() {
     return getManifest().my_config;
