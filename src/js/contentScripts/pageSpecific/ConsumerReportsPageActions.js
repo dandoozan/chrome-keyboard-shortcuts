@@ -1,6 +1,6 @@
 //todo: remove dependence on jquery
 import $ from 'jquery';
-import { PageActions } from './PageActions';
+import { PageActions } from '../PageActions';
 
 function removeTrailingSlashIfNecessary(url) {
     if (url[url.length - 1] === '/') {

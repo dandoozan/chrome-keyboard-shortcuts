@@ -1,4 +1,4 @@
-import { PageActions } from './PageActions';
+import { PageActions } from '../PageActions';
 
 //set window.Actions to this class so that I can access it in the "main" file
 window.Actions = class GooglePageActions extends PageActions {
