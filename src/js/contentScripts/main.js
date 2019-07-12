@@ -1,17 +1,25 @@
 import Mousetrap from 'mousetrap';
 import { getMatchesObjectFromManifest } from '../helpers/extension';
 import { registerKeyboardShortcut, getMyConfig } from '../common';
+// import actions from './GooglePageActions'
 
-//I know I don't need to set this variable, but I'm doing so just
-//to make it clear that I'm intentionally using the global Actions
-const Actions = window.Actions;
 
 function getKeyboardShortcutsForUrl(url) {
     let { my_config_key } = getMatchesObjectFromManifest(url);
     return getMyConfig().keyboard_shortcuts[my_config_key];
 }
 
-(function main() {
+async function getActions() {
+    var pageClassUrl = chrome.runtime.getURL('js/contentScripts/pageSpecific/GooglePageActions.bundle.js');
+    // var pageClassUrl = './pageSpecific/GooglePageActions.bundle.js';
+
+    var actions = (await import(/* webpackIgnore: true */ pageClassUrl)).default;
+    console.log('​getActions -> actions=', actions);
+
+    return actions;
+}
+
+(async function main() {
     //override the "stopCallback" function so that the keyboard shortcuts work in
     //input fields
     Mousetrap.stopCallback = function(e, element, combo) {
@@ -20,9 +28,13 @@ function getKeyboardShortcutsForUrl(url) {
         return false;
     };
 
+    //this gets the appropriate PageActions class
+    let actions = await getActions();
+
     //register all keyboard shortcuts in the config
     let keyboardShortcuts = getKeyboardShortcutsForUrl(window.location.href);
+
     keyboardShortcuts.forEach(({ keyCombo, fnName, args = [] }) => {
-        registerKeyboardShortcut(keyCombo, () => Actions[fnName](...args));
+        registerKeyboardShortcut(keyCombo, () => actions[fnName](...args));
     });
 })();
