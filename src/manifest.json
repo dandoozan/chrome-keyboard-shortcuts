@@ -81,12 +81,18 @@
     "content_scripts": [
         {
             "matches": ["https://www.google.com/search?*"],
-            "js": ["js/contentScripts/_main.bundle.js"],
+            "js": [
+                "js/contentScripts/Google.bundle.js",
+                "js/contentScripts/_main.bundle.js"
+            ],
             "my_config_key": "google"
         },
         {
             "matches": ["https://www.consumerreports.org/cars/*"],
-            "js": ["js/contentScripts/_main.bundle.js"],
+            "js": [
+                "js/contentScripts/ConsumerReports.bundle.js",
+                "js/contentScripts/_main.bundle.js"
+            ],
             "my_config_key": "consumerreports"
         }
     ]

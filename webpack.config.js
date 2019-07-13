@@ -2,7 +2,6 @@ const path = require('path');
 const glob = require('glob');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const EsmWebpackPlugin = require('@purtuga/esm-webpack-plugin');
 
 const PATH_TO_SRC = path.join(__dirname, 'src');
 
@@ -32,9 +31,7 @@ module.exports = {
                 ),
                 '[name].bundle.js'
             ),
-
-        //I have to set "library" to something so that EsmWebpackPlugin works
-        library: 'this_can_be_anything',
+        library: 'pageModule',
     },
     plugins: [
         new CleanWebpackPlugin(['dist']),
@@ -52,9 +49,6 @@ module.exports = {
                     };
                 })
         ),
-
-        //output files as es6 modules (so that I can use es6 import in contentScript)
-        new EsmWebpackPlugin(),
     ],
     module: {
         rules: [

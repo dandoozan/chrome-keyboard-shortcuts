@@ -1,27 +1,10 @@
 import Mousetrap from 'mousetrap';
 import { getMatchesObjectFromManifest } from '../helpers/extension';
 import { registerKeyboardShortcut, getMyConfig } from '../common';
-// import actions from './GooglePageActions'
 
-function getKeyboardShortcutsForUrl(url) {
+function getKeyboardShortcuts(url) {
     let { my_config_key } = getMatchesObjectFromManifest(url);
     return getMyConfig().keyboard_shortcuts[my_config_key];
-}
-
-async function getActions() {
-    //I have to dynamically import this from the chrome extension url bc chrome
-    //doesn't allow content scripts to be "modules" yet (so I couldn't specify this
-    //file to be loaded on the page as a content script in manifest.json)
-    //todo: get this from the manifest
-    var pageClassUrl = chrome.runtime.getURL(
-        'js/contentScripts/Google.bundle.js'
-    );
-
-    var actions = (await import(/* webpackIgnore: true */ pageClassUrl))
-        .default;
-    console.log('​getActions -> actions=', actions);
-
-    return actions;
 }
 
 (async function main() {
@@ -33,13 +16,18 @@ async function getActions() {
         return false;
     };
 
-    //this gets the appropriate PageActions class
-    let actions = await getActions();
+    //get the page module (NOTE: "pageModule" is available as a global variable because
+    //each of the page scripts are built as a "library" by webpack, which exports the
+    //module as a global variable.  I had to do it this way because chrome extensions don't
+    //allow loading actual es modules as content scripts yet.  In the future, each page script
+    //should be an es module, which means I'll be able to dynamically "import()" them here (instead
+    //of using a global variable), but until then, this is the best solution I could come up with.
+    let actions = pageModule.default;
 
-    //register all keyboard shortcuts in the config
-    let keyboardShortcuts = getKeyboardShortcutsForUrl(window.location.href);
-
-    keyboardShortcuts.forEach(({ keyCombo, fnName, args = [] }) => {
-        registerKeyboardShortcut(keyCombo, () => actions[fnName](...args));
-    });
+    //register all keyboard shortcuts defined in the config (in manifest.json)
+    getKeyboardShortcuts(window.location.href).forEach(
+        ({ keyCombo, fnName, args = [] }) => {
+            registerKeyboardShortcut(keyCombo, () => actions[fnName](...args));
+        }
+    );
 })();
