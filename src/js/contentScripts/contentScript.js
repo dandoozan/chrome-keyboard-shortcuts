@@ -10,8 +10,10 @@ function getKeyboardShortcutsForUrl(url) {
 }
 
 async function getActions() {
+    //I have to dynamically import this from the chrome extension url bc chrome
+    //doesn't allow content scripts to be "modules" yet (so I couldn't specify this
+    //file to be loaded on the page as a content script in manifest.json)
     var pageClassUrl = chrome.runtime.getURL('js/contentScripts/pageSpecific/GooglePageActions.bundle.js');
-    // var pageClassUrl = './pageSpecific/GooglePageActions.bundle.js';
 
     var actions = (await import(/* webpackIgnore: true */ pageClassUrl)).default;
     console.log('​getActions -> actions=', actions);

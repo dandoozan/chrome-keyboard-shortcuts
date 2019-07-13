@@ -1,27 +1,18 @@
 const path = require('path');
 const fs = require('fs');
+const glob = require('glob');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const EsmWebpackPlugin = require("@purtuga/esm-webpack-plugin");
+const EsmWebpackPlugin = require('@purtuga/esm-webpack-plugin');
 
 const PATH_TO_SRC = path.join(__dirname, 'src');
 const JS_DIR_NAME = 'js';
 const CONTENT_SCRIPTS_DIR_NAME = 'contentScripts';
 
-function stripFileExtension(fileName) {
-    return fileName.substring(0, fileName.lastIndexOf('.'));
-}
-
 function generateEntriesForDir(pathToDir) {
     //get the files in the dir that end in ".js"
-    let filenames = fs
-        .readdirSync(pathToDir)
-        .filter(fileName => fileName.endsWith('.js'));
-
-    //now reduce them to an obj with their name as the key and path as the value
-    return filenames.reduce((obj, filename) => {
-        const fileBaseName = stripFileExtension(filename);
-        obj[fileBaseName] = path.join(pathToDir, filename);
+    return glob.sync(`${pathToDir}/*.js`).reduce((obj, filename) => {
+        obj[path.parse(filename).name] = filename;
         return obj;
     }, {});
 }
@@ -67,6 +58,7 @@ function generateOutputFileName(entryInfo) {
 
 function getFilesToCopy() {
     //copy all files/dirs in "src" that are NOT "js"
+    //todo: use glob for this
     return fs.readdirSync(PATH_TO_SRC).filter(file => file !== JS_DIR_NAME);
 }
 
@@ -75,9 +67,14 @@ module.exports = [
         entry: generateEntriesForDir(
             path.join(PATH_TO_SRC, 'js', 'contentScripts', 'pageSpecific')
         ),
+        // context: path.join(__dirname, 'src', 'js', 'contentScripts', 'pageSpecific'),
+        // entry: glob.sync('./src/js/contentScripts/pageSpecific/*.js').reduce((obj, filename) => {
+        //     obj[path.parse(filename).name] = filename;
+        //     return obj;
+        // }, {}),
         output: {
             filename: generateOutputFileName,
-            library: 'mylib',
+            library: 'this_can_be_anything',
             libraryTarget: 'var',
         },
         devtool: 'cheap-source-map',
@@ -88,17 +85,20 @@ module.exports = [
             //the CommonChromeExtensions project)
             symlinks: false,
         },
-        plugins: [
-            new EsmWebpackPlugin()
-        ]
+        plugins: [new EsmWebpackPlugin()],
     },
     {
-        entry: generateEntries,
+        context: path.join(__dirname, 'src'),
+        entry: {
+            popup: './js/popup.js',
+            // background: './src/js/background.js',
+            contentScript: './js/contentScripts/contentScript.js',
+        },
         plugins: [
             new CleanWebpackPlugin(['dist']),
             new CopyWebpackPlugin(
                 getFilesToCopy().map(fileOrDirName => ({
-                    from: path.join('src', fileOrDirName),
+                    from: fileOrDirName,
                     to: fileOrDirName, //I have to specify "to" in order to get the same dir hierarchy structure when the contents are copied over to dist
                     ignore: ['.DS_Store'],
                 }))
