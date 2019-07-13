@@ -84,14 +84,14 @@
         {
             "matches": ["https://www.google.com/search?*"],
             "js": [
-                "js/contentScripts/main.bundle.js"
+                "js/contentScripts/contentScript.bundle.js"
             ],
             "my_config_key": "google"
         },
         {
             "matches": ["https://www.consumerreports.org/cars/*"],
             "js": [
-                "js/contentScripts/main.bundle.js"
+                "js/contentScripts/contentScript.bundle.js"
             ],
             "my_config_key": "consumerreports"
         }

@@ -17,36 +17,6 @@ function generateEntriesForDir(pathToDir) {
     }, {});
 }
 
-function fileExists(pathToFile) {
-    return fs.existsSync(pathToFile);
-}
-
-function generateEntries() {
-    let entries = {};
-
-    //add popup if it exists
-    let pathToPopup = path.join(PATH_TO_SRC, JS_DIR_NAME, 'popup.js');
-    if (fileExists(pathToPopup)) {
-        entries.popup = pathToPopup;
-    }
-
-    //add background if it exists
-    let pathToBackground = path.join(PATH_TO_SRC, JS_DIR_NAME, 'background.js');
-    if (fileExists(pathToBackground)) {
-        entries.background = pathToBackground;
-    }
-
-    //add content script files
-    entries = {
-        ...entries,
-        ...generateEntriesForDir(
-            path.join(PATH_TO_SRC, JS_DIR_NAME, CONTENT_SCRIPTS_DIR_NAME)
-        ),
-    };
-
-    return entries;
-}
-
 function generateOutputFileName(entryInfo) {
     //this creates the same structure that the entry files have
     const entryPath = entryInfo.chunk.entryModule.context;
@@ -62,66 +32,46 @@ function getFilesToCopy() {
     return fs.readdirSync(PATH_TO_SRC).filter(file => file !== JS_DIR_NAME);
 }
 
-module.exports = [
-    {
-        entry: generateEntriesForDir(
-            path.join(PATH_TO_SRC, 'js', 'contentScripts', 'pageSpecific')
+module.exports = {
+    context: path.join(__dirname, 'src'),
+    entry: {
+        popup: './js/popup.js',
+        // background: './src/js/background.js',
+        contentScript: './js/contentScripts/contentScript.js',
+        ...generateEntriesForDir(
+            path.join(__dirname, 'src/js/contentScripts/pageSpecific')
         ),
-        // context: path.join(__dirname, 'src', 'js', 'contentScripts', 'pageSpecific'),
-        // entry: glob.sync('./src/js/contentScripts/pageSpecific/*.js').reduce((obj, filename) => {
-        //     obj[path.parse(filename).name] = filename;
-        //     return obj;
-        // }, {}),
-        output: {
-            filename: generateOutputFileName,
-            library: 'this_can_be_anything',
-            libraryTarget: 'var',
-        },
-        devtool: 'cheap-source-map',
-        resolve: {
-            //set "symlinks" to false so that webpack looks for dependencies in this project (not in the symlinked
-            //file location).  This allows me to use dependencies (eg. lodash) in my "utils" file (which i symlink
-            //here) and it will use the "lodash" from this project (so i don't have to install it in
-            //the CommonChromeExtensions project)
-            symlinks: false,
-        },
-        plugins: [new EsmWebpackPlugin()],
     },
-    {
-        context: path.join(__dirname, 'src'),
-        entry: {
-            popup: './js/popup.js',
-            // background: './src/js/background.js',
-            contentScript: './js/contentScripts/contentScript.js',
-        },
-        plugins: [
-            new CleanWebpackPlugin(['dist']),
-            new CopyWebpackPlugin(
-                getFilesToCopy().map(fileOrDirName => ({
-                    from: fileOrDirName,
-                    to: fileOrDirName, //I have to specify "to" in order to get the same dir hierarchy structure when the contents are copied over to dist
-                    ignore: ['.DS_Store'],
-                }))
-            ),
+    output: {
+        filename: generateOutputFileName,
+        library: 'this_can_be_anything',
+    },
+    plugins: [
+        new CleanWebpackPlugin(['dist']),
+        new CopyWebpackPlugin(
+            getFilesToCopy().map(fileOrDirName => ({
+                from: fileOrDirName,
+                to: fileOrDirName, //I have to specify "to" in order to get the same dir hierarchy structure when the contents are copied over to dist
+                ignore: ['.DS_Store'],
+            }))
+        ),
+        //output files as es6 modules (so that I can use es6 import in contentScript)
+        new EsmWebpackPlugin(),
+    ],
+    module: {
+        rules: [
+            {
+                //css rule
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader'],
+            },
         ],
-        module: {
-            rules: [
-                {
-                    //css rule
-                    test: /\.css$/,
-                    use: ['style-loader', 'css-loader'],
-                },
-            ],
-        },
-        output: {
-            filename: generateOutputFileName,
-        },
-        devtool: 'cheap-source-map',
-        resolve: {
-            //set "symlinks" to false so that webpack looks for dependencies in this project (not in the symlinked
-            //file location).  This allows me to use dependencies (eg. lodash) in my "utils" file (which i symlink
-            //here) and it will use the "lodash" from this project
-            symlinks: false,
-        },
     },
-];
+    devtool: 'cheap-source-map',
+    resolve: {
+        //set "symlinks" to false so that webpack looks for dependencies in this project (not in the symlinked
+        //file location).  This allows me to use dependencies (eg. lodash) in my "utils" file (which i symlink
+        //here) and it will use the "lodash" from this project
+        symlinks: false,
+    },
+};
