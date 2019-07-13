@@ -10,12 +10,14 @@ module.exports = {
     context: PATH_TO_SRC,
     entry: {
         // background: './src/js/background.js',
-        popup: './js/popup.js',
-        contentScript: './js/contentScripts/contentScript.js',
+        popup: './js/popup/popup.js',
+        _main: './js/contentScripts/_main.js',
 
         //generate entries for the page-specific content scripts
         ...glob
-            .sync(`${PATH_TO_SRC}/js/contentScripts/pageSpecific/*.js`)
+            .sync(`${PATH_TO_SRC}/js/contentScripts/*.js`, {
+                ignore: '**/_*.js',
+            })
             .reduce((obj, pathToFile) => {
                 obj[path.parse(pathToFile).name] = pathToFile;
                 return obj;
@@ -23,12 +25,15 @@ module.exports = {
     },
     output: {
         //output the files in the same dir structure as src
-        filename: entryInfo => path.join(
-            entryInfo.chunk.entryModule.context.substring(PATH_TO_SRC.length),
-            '[name].bundle.js'
-        ),
+        filename: entryInfo =>
+            path.join(
+                entryInfo.chunk.entryModule.context.substring(
+                    PATH_TO_SRC.length
+                ),
+                '[name].bundle.js'
+            ),
 
-        //set "library" so that EsmWebpackPlugin works
+        //I have to set "library" to something so that EsmWebpackPlugin works
         library: 'this_can_be_anything',
     },
     plugins: [

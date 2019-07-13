@@ -77,22 +77,16 @@
         "48": "images/icon.png",
         "128": "images/icon.png"
     },
-    "web_accessible_resources": [
-        "js/contentScripts/pageSpecific/*"
-    ],
+    "web_accessible_resources": ["js/contentScripts/*"],
     "content_scripts": [
         {
             "matches": ["https://www.google.com/search?*"],
-            "js": [
-                "js/contentScripts/contentScript.bundle.js"
-            ],
+            "js": ["js/contentScripts/_main.bundle.js"],
             "my_config_key": "google"
         },
         {
             "matches": ["https://www.consumerreports.org/cars/*"],
-            "js": [
-                "js/contentScripts/contentScript.bundle.js"
-            ],
+            "js": ["js/contentScripts/_main.bundle.js"],
             "my_config_key": "consumerreports"
         }
     ]

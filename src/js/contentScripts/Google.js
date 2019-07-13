@@ -1,7 +1,6 @@
-import { PageActions } from '../PageActions';
+import { Page } from './_Page';
 
-//set window.Actions to this class so that I can access it in the "main" file
-export default class GooglePageActions extends PageActions {
+export default class Google extends Page {
     static openAllLinks() {
         console.log(`***openAllLinks`)
         // document.querySelectorAll('g-scrolling-carousel a').forEach(el => {

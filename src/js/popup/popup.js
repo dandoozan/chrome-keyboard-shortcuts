@@ -1,4 +1,4 @@
-import { registerKeyboardShortcut, getMyConfig } from './common';
+import { registerKeyboardShortcut, getMyConfig } from '../common';
 import { BrowserActions } from './BrowserActions';
 
 (function main() {

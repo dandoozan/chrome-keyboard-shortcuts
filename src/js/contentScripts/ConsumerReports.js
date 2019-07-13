@@ -1,6 +1,6 @@
 //todo: remove dependence on jquery
 import $ from 'jquery';
-import { PageActions } from '../PageActions';
+import { Page } from './_Page';
 
 function removeTrailingSlashIfNecessary(url) {
     if (url[url.length - 1] === '/') {
@@ -9,7 +9,7 @@ function removeTrailingSlashIfNecessary(url) {
     return url;
 }
 
-window.Actions = class ConsumerReportsPageActions extends PageActions {
+export default class ConsumerReports extends Page {
     static openAllLinks() {
         let windowHref = removeTrailingSlashIfNecessary(window.location.href);
 
