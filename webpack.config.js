@@ -1,60 +1,53 @@
 const path = require('path');
-const fs = require('fs');
 const glob = require('glob');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const EsmWebpackPlugin = require('@purtuga/esm-webpack-plugin');
 
 const PATH_TO_SRC = path.join(__dirname, 'src');
-const JS_DIR_NAME = 'js';
-const CONTENT_SCRIPTS_DIR_NAME = 'contentScripts';
-
-function generateEntriesForDir(pathToDir) {
-    //get the files in the dir that end in ".js"
-    return glob.sync(`${pathToDir}/*.js`).reduce((obj, filename) => {
-        obj[path.parse(filename).name] = filename;
-        return obj;
-    }, {});
-}
-
-function generateOutputFileName(entryInfo) {
-    //this creates the same structure that the entry files have
-    const entryPath = entryInfo.chunk.entryModule.context;
-    return path.join(
-        entryPath.substring(PATH_TO_SRC.length),
-        '[name].bundle.js'
-    );
-}
-
-function getFilesToCopy() {
-    //copy all files/dirs in "src" that are NOT "js"
-    //todo: use glob for this
-    return fs.readdirSync(PATH_TO_SRC).filter(file => file !== JS_DIR_NAME);
-}
 
 module.exports = {
-    context: path.join(__dirname, 'src'),
+    context: PATH_TO_SRC,
     entry: {
-        popup: './js/popup.js',
         // background: './src/js/background.js',
+        popup: './js/popup.js',
         contentScript: './js/contentScripts/contentScript.js',
-        ...generateEntriesForDir(
-            path.join(__dirname, 'src/js/contentScripts/pageSpecific')
-        ),
+
+        //generate entries for the page-specific content scripts
+        ...glob
+            .sync(`${PATH_TO_SRC}/js/contentScripts/pageSpecific/*.js`)
+            .reduce((obj, pathToFile) => {
+                obj[path.parse(pathToFile).name] = pathToFile;
+                return obj;
+            }, {}),
     },
     output: {
-        filename: generateOutputFileName,
+        //output the files in the same dir structure as src
+        filename: entryInfo => path.join(
+            entryInfo.chunk.entryModule.context.substring(PATH_TO_SRC.length),
+            '[name].bundle.js'
+        ),
+
+        //set "library" so that EsmWebpackPlugin works
         library: 'this_can_be_anything',
     },
     plugins: [
         new CleanWebpackPlugin(['dist']),
+
+        //copy everything in "src" except the "js" dir
         new CopyWebpackPlugin(
-            getFilesToCopy().map(fileOrDirName => ({
-                from: fileOrDirName,
-                to: fileOrDirName, //I have to specify "to" in order to get the same dir hierarchy structure when the contents are copied over to dist
-                ignore: ['.DS_Store'],
-            }))
+            glob
+                .sync(`${PATH_TO_SRC}/*`, { ignore: `**/js` })
+                .map(pathToFile => {
+                    let basename = path.parse(pathToFile).base;
+                    return {
+                        from: basename,
+                        to: basename, //I have to specify "to" in order to get the same dir hierarchy structure when the contents are copied over to dist
+                        ignore: ['.DS_Store'],
+                    };
+                })
         ),
+
         //output files as es6 modules (so that I can use es6 import in contentScript)
         new EsmWebpackPlugin(),
     ],
