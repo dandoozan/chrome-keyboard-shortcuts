@@ -24,7 +24,7 @@ function getKeyboardShortcuts(url) {
     //of using a global variable), but until then, this is the best solution I could come up with.
     let actions = pageModule.default;
 
-    //register all keyboard shortcuts defined in the config (in manifest.json)
+    //register all keyboard shortcuts defined in the config
     getKeyboardShortcuts(window.location.href).forEach(
         ({ keyCombo, fnName, args = [] }) => {
             registerKeyboardShortcut(keyCombo, () => actions[fnName](...args));
