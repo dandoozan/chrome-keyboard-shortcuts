@@ -7,7 +7,7 @@ function getKeyboardShortcuts(url) {
     return getMyConfig().keyboard_shortcuts[my_config_key];
 }
 
-(async function main() {
+(function main() {
     //override the "stopCallback" function so that the keyboard shortcuts work in
     //input fields
     Mousetrap.stopCallback = function(e, element, combo) {

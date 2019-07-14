@@ -77,7 +77,6 @@
         "48": "images/icon.png",
         "128": "images/icon.png"
     },
-    "web_accessible_resources": ["js/contentScripts/*"],
     "content_scripts": [
         {
             "matches": ["https://www.google.com/search?*"],
