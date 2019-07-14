@@ -1,8 +1,7 @@
 import Mousetrap from 'mousetrap';
-import { getManifest } from './helpers/extension';
 
-export function getMyConfig() {
-    return getManifest().my_config;
+export function fetchConfig() {
+    return require('../config.json');
 }
 
 export function registerKeyboardShortcut(trigger, fn) {

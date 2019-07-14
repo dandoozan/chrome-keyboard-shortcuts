@@ -1,10 +1,10 @@
 import Mousetrap from 'mousetrap';
 import { getMatchesObjectFromManifest } from '../helpers/extension';
-import { registerKeyboardShortcut, getMyConfig } from '../common';
+import { registerKeyboardShortcut, fetchConfig } from '../common';
 
 function getKeyboardShortcuts(url) {
-    let { my_config_key } = getMatchesObjectFromManifest(url);
-    return getMyConfig().keyboard_shortcuts[my_config_key];
+    let { config_key } = getMatchesObjectFromManifest(url);
+    return fetchConfig().keyboard_shortcuts[config_key];
 }
 
 (function main() {

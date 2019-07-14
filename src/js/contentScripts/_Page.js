@@ -1,3 +1,3 @@
 export class Page {
-    //put common code for all PageActions here
+    //put common code for all page scripts here
 }

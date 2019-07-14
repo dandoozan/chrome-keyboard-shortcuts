@@ -2,71 +2,7 @@
     "name": "ChromeKeyboardShortcuts",
     "version": "0.1",
     "description": "",
-    "my_config": {
-        "reload_extension_message": "dpd_reloadExtension",
-        "keyboard_shortcuts": {
-            "browser": [
-                { "keyCombo": "`", "fnName": "moveTabLeft" },
-                { "keyCombo": "1", "fnName": "moveTabRight" },
-                { "keyCombo": "2", "fnName": "moveTabsToRightSide" },
-                { "keyCombo": "3", "fnName": "moveTabsToLeftSide" },
-                { "keyCombo": "4", "fnName": "closeTabsToTheRight" },
-                { "keyCombo": "6", "fnName": "closeTabsToTheLeft" },
-                { "keyCombo": "7", "fnName": "moveTabsToNewWindow" },
-                { "keyCombo": "8", "fnName": "duplicateTabs" },
-                {
-                    "keyCombo": "9",
-                    "fnName": "reloadExtension",
-                    "args": ["celhpdedpgliimkoajfkkcjhlgggcdig"]
-                },
-                {
-                    "keyCombo": "0",
-                    "fnName": "reloadExtension",
-                    "args": ["me"]
-                },
-                {
-                    "keyCombo": "-",
-                    "fnName": "createTab",
-                    "args": ["https://docs.google.com/spreadsheets/u/0/"]
-                },
-                {
-                    "keyCombo": "=",
-                    "fnName": "createTab",
-                    "args": ["https://docs.google.com/document/u/0/"]
-                },
-                {
-                    "keyCombo": "q",
-                    "fnName": "createTab",
-                    "args": ["https://www.wikipedia.org/"]
-                },
-                {
-                    "keyCombo": "w",
-                    "fnName": "createTab",
-                    "args": ["https://mail.google.com/mail/u/0/"]
-                },
-                {
-                    "keyCombo": "e",
-                    "fnName": "createTab",
-                    "args": ["https://www.google.com/maps"]
-                },
-                {
-                    "keyCombo": "r",
-                    "fnName": "createTab",
-                    "args": ["https://www.youtube.com/"]
-                },
-                {
-                    "keyCombo": "y",
-                    "fnName": "reloadExtension",
-                    "args": ["nnkkjnnnmmdepibankdbmacgcoldaode"]
-                }
-            ],
-            "google": [{ "keyCombo": "alt+enter", "fnName": "openAllLinks" }],
-            "consumerreports": [
-                { "keyCombo": "alt+enter", "fnName": "openAllLinks" }
-            ]
-        }
-    },
-    "permissions": ["system.display", "tabs", "<all_urls>"],
+    "permissions": ["<all_urls>", "tabs", "system.display"],
     "manifest_version": 2,
     "browser_action": {
         "default_icon": "images/icon.png",
@@ -84,7 +20,7 @@
                 "js/contentScripts/Google.bundle.js",
                 "js/contentScripts/_main.bundle.js"
             ],
-            "my_config_key": "google"
+            "config_key": "google"
         },
         {
             "matches": ["https://www.consumerreports.org/cars/*"],
@@ -92,7 +28,7 @@
                 "js/contentScripts/ConsumerReports.bundle.js",
                 "js/contentScripts/_main.bundle.js"
             ],
-            "my_config_key": "consumerreports"
+            "config_key": "consumerreports"
         }
     ]
 }
