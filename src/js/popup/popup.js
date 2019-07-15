@@ -1,9 +1,9 @@
-import { registerKeyboardShortcut, getMyConfig } from '../common';
+import { registerKeyboardShortcut, fetchConfig } from '../common';
 import { BrowserActions } from './BrowserActions';
 
 (function main() {
     //register the keyboard shortcuts
-    const keyboardShortcuts = getMyConfig().keyboard_shortcuts
+    const keyboardShortcuts = fetchConfig().keyboard_shortcuts
         .browser;
     keyboardShortcuts.forEach(({ keyCombo, fnName, args = [] }) => {
         registerKeyboardShortcut(keyCombo, async () => {

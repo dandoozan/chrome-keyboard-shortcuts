@@ -8,7 +8,7 @@ import {
     getScreenWidth,
     getScreenHeight,
 } from '../helpers/extension';
-import { getMyConfig } from '../common';
+import { fetchConfig } from '../common';
 
 export class BrowserActions {
     static async closeTabsToTheRight() {
@@ -134,14 +134,21 @@ export class BrowserActions {
         }
     }
 
-    static reloadExtension(extensionId) {
-        if (extensionId === 'me') {
+    static reloadExtension(extensionName) {
+        if (extensionName === 'me') {
             //reload myself
             chrome.runtime.reload();
         } else {
-            //send a msg to the other extension to reload themselves
-            chrome.runtime.sendMessage(extensionId, {
-                msg: getMyConfig().reload_extension_message,
+            chrome.management.getAll(extensions => {
+                //find the id for this extension
+                let [{ id }] = extensions.filter(
+                    ({ name }) => name === extensionName
+                );
+
+                //send a msg to the other extension to reload themselves
+                chrome.runtime.sendMessage(id, {
+                    msg: fetchConfig().reload_extension_message,
+                });
             });
         }
     }

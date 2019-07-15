@@ -2,7 +2,7 @@
     "name": "ChromeKeyboardShortcuts",
     "version": "0.1",
     "description": "",
-    "permissions": ["<all_urls>", "tabs", "system.display"],
+    "permissions": ["<all_urls>", "tabs", "management", "system.display"],
     "manifest_version": 2,
     "browser_action": {
         "default_icon": "images/icon.png",
