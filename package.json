@@ -3,15 +3,12 @@
     "version": "1.0.0",
     "description": "",
     "dependencies": {
-        "jquery": "^3.3.1",
         "mousetrap": "^1.6.2"
     },
     "devDependencies": {
         "clean-webpack-plugin": "^0.1.19",
         "copy-webpack-plugin": "^4.6.0",
-        "css-loader": "^1.0.1",
         "glob": "^7.1.4",
-        "style-loader": "^0.23.1",
         "webpack": "^4.23.1",
         "webpack-cli": "^3.1.2"
     },

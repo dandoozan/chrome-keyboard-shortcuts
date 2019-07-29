@@ -16,9 +16,9 @@ export default class ConsumerReports extends Page {
 
         //get all past years
         let pastYears = Array.from(
-            document.querySelectorAll('.year-details__row:visible')
+            document.querySelectorAll('.year-details__row')
         ).map(el => el.getAttribute('data-year'));
-        
+
         let allYears = [currYear, ...pastYears];
 
         //generate and open links for all years

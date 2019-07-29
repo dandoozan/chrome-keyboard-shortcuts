@@ -7,8 +7,8 @@ import {
     isWindowFullscreen,
     getScreenWidth,
     getScreenHeight,
-} from '../helpers/extension';
-import { fetchConfig } from '../common';
+} from '../utils';
+import { loadOptions } from '../utils';
 
 export class BrowserActions {
     static async closeTabsToTheRight() {
@@ -147,7 +147,7 @@ export class BrowserActions {
 
                 //send a msg to the other extension to reload themselves
                 chrome.runtime.sendMessage(id, {
-                    msg: fetchConfig().reload_extension_message,
+                    msg: loadOptions().reload_extension_message,
                 });
             });
         }

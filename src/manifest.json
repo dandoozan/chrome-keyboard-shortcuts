@@ -20,7 +20,9 @@
                 "js/contentScripts/Google.bundle.js",
                 "js/contentScripts/_main.bundle.js"
             ],
-            "config_key": "google"
+            "keyboard_shortcuts": [
+                { "keyCombo": "alt+enter", "fnName": "openAllLinks" }
+            ]
         },
         {
             "matches": ["https://www.consumerreports.org/cars/*"],
@@ -28,7 +30,9 @@
                 "js/contentScripts/ConsumerReports.bundle.js",
                 "js/contentScripts/_main.bundle.js"
             ],
-            "config_key": "consumerreports"
+            "keyboard_shortcuts": [
+                { "keyCombo": "alt+enter", "fnName": "openAllLinks" }
+            ]
         }
     ]
 }

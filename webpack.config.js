@@ -8,9 +8,12 @@ const PATH_TO_SRC = path.join(__dirname, 'src');
 module.exports = {
     context: PATH_TO_SRC,
     entry: {
-        // background: './src/js/background.js',
-        popup: './js/popup/popup.js',
-        _main: './js/contentScripts/_main.js',
+        // 'js/background/background': glob.sync(
+        //     `${PATH_TO_SRC}/js/background/*.js`
+        // ),
+        'js/popup/popup': './js/popup/popup.js',
+        // 'js/options': './js/options.js',
+        'js/contentScripts/_main': './js/contentScripts/_main.js',
 
         //generate entries for the page-specific content scripts
         ...glob
@@ -18,20 +21,18 @@ module.exports = {
                 ignore: '**/_*.js',
             })
             .reduce((obj, pathToFile) => {
-                obj[path.parse(pathToFile).name] = pathToFile;
+                obj[
+                    pathToFile.substring(
+                        PATH_TO_SRC.length,
+                        pathToFile.lastIndexOf('.')
+                    )
+                ] = pathToFile;
                 return obj;
             }, {}),
     },
     output: {
-        //output the files in the same dir structure as src
-        filename: entryInfo =>
-            path.join(
-                entryInfo.chunk.entryModule.context.substring(
-                    PATH_TO_SRC.length
-                ),
-                '[name].bundle.js'
-            ),
-        library: 'pageModule',
+        filename: '[name].bundle.js',
+        library: 'PAGE_MODULE',
     },
     plugins: [
         new CleanWebpackPlugin(['dist']),
@@ -50,16 +51,7 @@ module.exports = {
                 })
         ),
     ],
-    module: {
-        rules: [
-            {
-                //css rule
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader'],
-            },
-        ],
-    },
-    devtool: 'cheap-source-map',
+    devtool: 'inline-source-map',
     resolve: {
         //set "symlinks" to false so that webpack looks for dependencies in this project (not in the symlinked
         //file location).  This allows me to use dependencies (eg. lodash) in my "utils" file (which i symlink
