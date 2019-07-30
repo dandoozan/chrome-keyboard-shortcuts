@@ -134,23 +134,31 @@ export class BrowserActions {
         }
     }
 
-    static reloadExtension(extensionName) {
-        if (extensionName === 'me') {
-            //reload myself
-            chrome.runtime.reload();
-        } else {
-            chrome.management.getAll(extensions => {
-                //find the id for this extension
-                let [{ id }] = extensions.filter(
-                    ({ name }) => name === extensionName
-                );
+    static async reloadExtension(extensionName) {
+        return new Promise((resolve, reject) => {
+            if (extensionName === 'me') {
+                //reload myself
+                chrome.runtime.reload();
+                resolve();
+            } else {
+                chrome.management.getAll(async extensions => {
+                    //find the id for this extension
+                    let [{ id }] = extensions.filter(
+                        ({ name }) => name === extensionName
+                    );
 
-                //send a msg to the other extension to reload themselves
-                chrome.runtime.sendMessage(id, {
-                    msg: loadOptions().reload_extension_message,
+                    //send a msg to the other extension to reload themselves
+                    chrome.runtime.sendMessage(
+                        id,
+                        {
+                            msg: (await loadOptions()).reload_extension_message,
+                        },
+                        null,
+                        resolve
+                    );
                 });
-            });
-        }
+            }
+        });
     }
 }
 
