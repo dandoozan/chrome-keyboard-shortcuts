@@ -1,6 +1,6 @@
 import Mousetrap from 'mousetrap';
 import { registerKeyboardShortcut } from '../common';
-import { getContentScriptObject } from '../utils';
+import { getContentScriptObject } from '../helpers/chrome';
 
 (async function main() {
     //override the "stopCallback" function so that the keyboard shortcuts work in

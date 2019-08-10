@@ -7,8 +7,8 @@ import {
     isWindowFullscreen,
     getScreenWidth,
     getScreenHeight,
-} from '../utils';
-import { loadOptions } from '../utils';
+    loadOptions
+} from '../helpers/chrome';
 
 export class BrowserActions {
     static async closeTabsToTheRight() {
