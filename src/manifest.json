@@ -1,38 +1,38 @@
 {
-    "name": "ChromeKeyboardShortcuts",
-    "version": "0.1",
-    "description": "",
-    "permissions": ["<all_urls>", "tabs", "management", "system.display"],
-    "manifest_version": 2,
-    "browser_action": {
-        "default_icon": "images/icon.png",
-        "default_popup": "popup.html"
+  "name": "ChromeKeyboardShortcuts",
+  "version": "0.1",
+  "description": "",
+  "permissions": ["<all_urls>", "tabs", "management", "system.display"],
+  "manifest_version": 2,
+  "browser_action": {
+    "default_icon": "images/icon.png",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "images/icon.png",
+    "48": "images/icon.png",
+    "128": "images/icon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.google.com/search?*"],
+      "js": [
+        "js/contentScripts/Google.bundle.js",
+        "js/contentScripts/_main.bundle.js"
+      ],
+      "keyboard_shortcuts": [
+        { "keyCombo": "alt+enter", "fnName": "openAllLinks" }
+      ]
     },
-    "icons": {
-        "16": "images/icon.png",
-        "48": "images/icon.png",
-        "128": "images/icon.png"
-    },
-    "content_scripts": [
-        {
-            "matches": ["https://www.google.com/search?*"],
-            "js": [
-                "js/contentScripts/Google.bundle.js",
-                "js/contentScripts/_main.bundle.js"
-            ],
-            "keyboard_shortcuts": [
-                { "keyCombo": "alt+enter", "fnName": "openAllLinks" }
-            ]
-        },
-        {
-            "matches": ["https://www.consumerreports.org/cars/*"],
-            "js": [
-                "js/contentScripts/ConsumerReports.bundle.js",
-                "js/contentScripts/_main.bundle.js"
-            ],
-            "keyboard_shortcuts": [
-                { "keyCombo": "alt+enter", "fnName": "openAllLinks" }
-            ]
-        }
-    ]
+    {
+      "matches": ["https://www.consumerreports.org/cars/*"],
+      "js": [
+        "js/contentScripts/ConsumerReports.bundle.js",
+        "js/contentScripts/_main.bundle.js"
+      ],
+      "keyboard_shortcuts": [
+        { "keyCombo": "alt+enter", "fnName": "openAllLinks" }
+      ]
+    }
+  ]
 }
