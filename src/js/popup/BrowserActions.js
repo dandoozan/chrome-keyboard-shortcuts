@@ -40,28 +40,6 @@ export class BrowserActions {
     }
     return window;
   }
-  static async moveTabsToNewWindowOnTheRight(tabs) {
-    //if no tabs are passed in, get the currently selected tabs
-    const [firstTab, ...restOfTabs] = tabs || (await getAllSelectedTabs());
-
-    //first, create the window from the first tab (bc you can't create a
-    //window with multiple tabs)
-    const window = await moveTabToNewWindowOnTheRight(firstTab);
-
-    //then, move the rest of the tabs over to the new window
-    if (restOfTabs.length > 0) {
-      await moveTabsToWindow(restOfTabs, window);
-    }
-    return window;
-  }
-
-  static async splitFullscreenWindowToRight(window) {
-    await setFullscreenOff(window);
-    await moveWindowToLeftSide(window);
-
-    const selectedTabs = await getAllSelectedTabs();
-    await moveTabsToNewWindowOnTheRight(selectedTabs);
-  }
 
   static async moveTabsToRightSide() {
     const currentWindow = await getCurrentWindow();
@@ -160,6 +138,29 @@ export class BrowserActions {
       }
     });
   }
+}
+
+async function moveTabsToNewWindowOnTheRight(tabs) {
+  //if no tabs are passed in, get the currently selected tabs
+  const [firstTab, ...restOfTabs] = tabs || (await getAllSelectedTabs());
+
+  //first, create the window from the first tab (bc you can't create a
+  //window with multiple tabs)
+  const window = await moveTabToNewWindowOnTheRight(firstTab);
+
+  //then, move the rest of the tabs over to the new window
+  if (restOfTabs.length > 0) {
+    await moveTabsToWindow(restOfTabs, window);
+  }
+  return window;
+}
+
+async function splitFullscreenWindowToRight(window) {
+  await setFullscreenOff(window);
+  await moveWindowToLeftSide(window);
+
+  const selectedTabs = await getAllSelectedTabs();
+  await moveTabsToNewWindowOnTheRight(selectedTabs);
 }
 
 function closeTabs(tabs) {
