@@ -165,7 +165,10 @@ async function splitFullscreenWindowToRight(window) {
 
 function closeTabs(tabs) {
   return new Promise((resolve, reject) => {
-    chrome.tabs.remove(tabs.map(tab => tab.id), resolve);
+    chrome.tabs.remove(
+      tabs.map(tab => tab.id),
+      resolve
+    );
   });
 }
 
@@ -189,8 +192,17 @@ function createNewWindow(windowOptions) {
   });
 }
 
-async function moveTabToNewWindow(tab) {
-  return await createNewWindow({ tabId: tab.id });
+async function getWindow(windowId) {
+  return new Promise((resolve, reject) => {
+    chrome.windows.get(windowId, resolve);
+  });
+}
+
+async function moveTabToNewWindow({ id: tabId, windowId }) {
+  //create a new window containing the tab passed in AND make it the same
+  //size/position as the original window
+  let { top, left, width, height } = await getWindow(windowId);
+  return await createNewWindow({ tabId, top, left, width, height });
 }
 async function moveTabToNewWindowOnTheRight(tab) {
   return await createNewWindow({
