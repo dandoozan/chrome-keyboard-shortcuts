@@ -42,15 +42,27 @@ export class BrowserActions {
   }
 
   static async moveTabsToRightSide() {
+    //Alogrithm:
+    //if the window is fullscreen,
+    //  turn off fullscreen
+    //  move window to left
+    //  move tabs to new window on right
+    //else
+    //  if there is a window on right
+    //    move tabs to window on right
+    //  else
+    //    move window to left
+    //    move tabs to new window on right
+
     const currentWindow = await getCurrentWindow();
+    const selectedTabs = await getAllSelectedTabs();
 
-    //if the current window is fullscreen, handle this special case by splitting
-    //it and moving the selected tabs to the right side
     if (await isWindowFullscreen(currentWindow)) {
-      splitFullscreenWindowToRight(currentWindow);
+      //I could not get this to work, so come back to this in the future
+      // await setFullscreenOff(currentWindow);
+      // await moveWindowToLeftSide(currentWindow);
+      // await moveTabsToNewWindowOnTheRight(selectedTabs);
     } else {
-      const selectedTabs = await getAllSelectedTabs();
-
       //if there is already a half-size window on the right side, move the
       //selected tabs to that window
       const windowsOnRightSide = await getWindowsOnRightSideOfScreen();
@@ -63,7 +75,8 @@ export class BrowserActions {
         const firstWindowOnRightSide = windowsOnRightSide[0];
         moveTabsToWindow(selectedTabs, firstWindowOnRightSide);
       } else {
-        //otherwise, create a half-size window on the right and move the selected tabs there
+        //otherwise, create side-by-side windows
+        await moveWindowToLeftSide(currentWindow);
         await moveTabsToNewWindowOnTheRight(selectedTabs);
       }
     }
@@ -153,14 +166,6 @@ async function moveTabsToNewWindowOnTheRight(tabs) {
     await moveTabsToWindow(restOfTabs, window);
   }
   return window;
-}
-
-async function splitFullscreenWindowToRight(window) {
-  await setFullscreenOff(window);
-  await moveWindowToLeftSide(window);
-
-  const selectedTabs = await getAllSelectedTabs();
-  await moveTabsToNewWindowOnTheRight(selectedTabs);
 }
 
 function closeTabs(tabs) {
