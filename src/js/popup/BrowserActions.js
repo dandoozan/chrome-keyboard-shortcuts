@@ -14,14 +14,14 @@ export class BrowserActions {
   static async closeTabsToTheRight() {
     let currentTabIndex = (await getCurrentTab()).index;
     let tabsToTheRight = (await getAllTabs()).filter(
-      tab => tab.index > currentTabIndex
+      (tab) => tab.index > currentTabIndex
     );
     await closeTabs(tabsToTheRight);
   }
   static async closeTabsToTheLeft() {
     let currentTabIndex = (await getCurrentTab()).index;
     let tabsToTheLeft = (await getAllTabs()).filter(
-      tab => tab.index < currentTabIndex
+      (tab) => tab.index < currentTabIndex
     );
     await closeTabs(tabsToTheLeft);
   }
@@ -42,7 +42,7 @@ export class BrowserActions {
   }
 
   static async moveTabsToRightSide() {
-    //Alogrithm:
+    //Algorithm:
     //if the window is fullscreen,
     //  turn off fullscreen
     //  move window to left
@@ -82,7 +82,44 @@ export class BrowserActions {
     }
   }
   static async moveTabsToLeftSide() {
-    //todo: fill this in
+    //Algorithm:
+    //if the window is fullscreen,
+    //  turn off fullscreen
+    //  move window to right
+    //  move tabs to new window on left
+    //else
+    //  if there is a window on left
+    //    move tabs to window on left
+    //  else
+    //    move window to right
+    //    move tabs to new window on left
+
+    const currentWindow = await getCurrentWindow();
+    const selectedTabs = await getAllSelectedTabs();
+
+    if (await isWindowFullscreen(currentWindow)) {
+      //I could not get this to work, so come back to this in the future
+      // await setFullscreenOff(currentWindow);
+      // await moveWindowToRightSide(currentWindow);
+      // await moveTabsToNewWindowOnTheLeft(selectedTabs);
+    } else {
+      //if there is already a half-size window on the left side, move the
+      //selected tabs to that window
+      const windowsOnLeftSide = await getWindowsOnLeftSideOfScreen();
+      if (windowsOnLeftSide.length > 0) {
+        //move the tabs to the first window on the left--this may not be
+        //what i want, but i think it will work for most cases.  If i run
+        //into an issue where this doesn't work, then try to come up with a
+        //way of knowing which window to move it to (maybe by most recent
+        //focused of something)
+        const firstWindowOnLeftSide = windowsOnLeftSide[0];
+        moveTabsToWindow(selectedTabs, firstWindowOnLeftSide);
+      } else {
+        //otherwise, create side-by-side windows
+        await moveWindowToRightSide(currentWindow);
+        await moveTabsToNewWindowOnTheLeft(selectedTabs);
+      }
+    }
   }
 
   static moveTabLeft() {
@@ -118,7 +155,7 @@ export class BrowserActions {
   }
   static async duplicateTabs() {
     const tabs = await getAllSelectedTabs();
-    const tabIds = tabs.map(tab => tab.id);
+    const tabIds = tabs.map((tab) => tab.id);
 
     for (let i = 0; i < tabIds.length; i++) {
       await duplicateTab(tabIds[i]);
@@ -132,7 +169,7 @@ export class BrowserActions {
         chrome.runtime.reload();
         resolve();
       } else {
-        chrome.management.getAll(async extensions => {
+        chrome.management.getAll(async (extensions) => {
           //find the id for this extension
           let [{ id }] = extensions.filter(
             ({ name }) => name === extensionName
@@ -167,11 +204,25 @@ async function moveTabsToNewWindowOnTheRight(tabs) {
   }
   return window;
 }
+async function moveTabsToNewWindowOnTheLeft(tabs) {
+  //if no tabs are passed in, get the currently selected tabs
+  const [firstTab, ...restOfTabs] = tabs || (await getAllSelectedTabs());
+
+  //first, create the window from the first tab (bc you can't create a
+  //window with multiple tabs)
+  const window = await moveTabToNewWindowOnTheLeft(firstTab);
+
+  //then, move the rest of the tabs over to the new window
+  if (restOfTabs.length > 0) {
+    await moveTabsToWindow(restOfTabs, window);
+  }
+  return window;
+}
 
 function closeTabs(tabs) {
   return new Promise((resolve, reject) => {
     chrome.tabs.remove(
-      tabs.map(tab => tab.id),
+      tabs.map((tab) => tab.id),
       resolve
     );
   });
@@ -191,7 +242,7 @@ function duplicateTab(tabId) {
 
 function createNewWindow(windowOptions) {
   return new Promise((resolve, reject) => {
-    chrome.windows.create(windowOptions, window => {
+    chrome.windows.create(windowOptions, (window) => {
       resolve(window);
     });
   });
@@ -218,20 +269,29 @@ async function moveTabToNewWindowOnTheRight(tab) {
     height: await getScreenHeight(),
   });
 }
+async function moveTabToNewWindowOnTheLeft(tab) {
+  return await createNewWindow({
+    tabId: tab.id,
+    left: 0,
+    top: 0,
+    width: (await getScreenWidth()) / 2,
+    height: await getScreenHeight(),
+  });
+}
 
 async function focusTab(tab) {
   return new Promise((resolve, reject) => {
-    chrome.tabs.update(tab.id, { active: true }, tab => resolve);
+    chrome.tabs.update(tab.id, { active: true }, (tab) => resolve);
   });
 }
 
 function moveTabsToWindow(tabs, window) {
   return new Promise((resolve, reject) => {
-    const tabIds = tabs.map(tab => tab.id);
+    const tabIds = tabs.map((tab) => tab.id);
     chrome.tabs.move(
       tabIds,
       { windowId: window.id, index: -1 },
-      async tabOrTabs => {
+      async (tabOrTabs) => {
         //focus the first tab (otherwise, they're unfocused)
         await focusTab(Array.isArray(tabOrTabs) ? tabOrTabs[0] : tabOrTabs);
         resolve(tabOrTabs);
@@ -276,6 +336,9 @@ async function isWindowOnRightSideOfScreen(window) {
     window.left === (await getScreenWidth()) / 2
   );
 }
+async function isWindowOnLeftSideOfScreen(window) {
+  return (await isWindowHalfScreenSize(window)) && window.left === 0;
+}
 
 async function getWindowsOnRightSideOfScreen() {
   const windows = await getAllWindows();
@@ -286,4 +349,14 @@ async function getWindowsOnRightSideOfScreen() {
     }
   }
   return windowsOnRightSideOfScreen;
+}
+async function getWindowsOnLeftSideOfScreen() {
+  const windows = await getAllWindows();
+  const windowsOnLeftSideOfScreen = [];
+  for (const window of windows) {
+    if (await isWindowOnLeftSideOfScreen(window)) {
+      windowsOnLeftSideOfScreen.push(window);
+    }
+  }
+  return windowsOnLeftSideOfScreen;
 }
