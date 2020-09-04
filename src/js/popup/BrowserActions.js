@@ -147,6 +147,18 @@ export class BrowserActions {
       );
     });
   }
+  static moveTabToFirstPosition() {
+    return new Promise(async (resolve, reject) => {
+      const tab = await getCurrentTab();
+      chrome.tabs.move(
+        tab.id,
+        {
+          index: 0,
+        },
+        resolve
+      );
+    });
+  }
 
   static async createTab(url) {
     return new Promise((resolve, reject) => {
