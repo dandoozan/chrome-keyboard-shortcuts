@@ -20,7 +20,11 @@
         "js/contentScripts/Amazon.bundle.js",
         "js/contentScripts/_main.bundle.js"
       ],
-      "keyboard_shortcuts": [{ "keyCombo": "/", "fnName": "focusSearchBar" }]
+      "keyboard_shortcuts": [
+        { "keyCombo": "/", "fnName": "focusSearchBar" },
+        { "keyCombo": "right", "fnName": "clickNext" },
+        { "keyCombo": "left", "fnName": "clickPrevious" }
+      ]
     },
     {
       "matches": ["https://www.consumerreports.org/cars/*"],
