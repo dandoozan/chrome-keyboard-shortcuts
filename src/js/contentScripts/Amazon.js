@@ -2,9 +2,9 @@ import { Page } from './_Page';
 
 export default class Amazon extends Page {
   static focusSearchBar() {
-    let nextButton = document.querySelector('#twotabsearchtextbox');
-    if (nextButton) {
-      nextButton.focus();
+    let searchInput = document.querySelector('#twotabsearchtextbox');
+    if (searchInput) {
+      searchInput.focus();
     }
   }
 

@@ -15,4 +15,10 @@ export default class Google extends Page {
       )}`
     );
   }
+  static focusSearchBar() {
+    let searchInput = document.querySelector('input[title="Search"]');
+    if (searchInput) {
+      searchInput.focus();
+    }
+  }
 }

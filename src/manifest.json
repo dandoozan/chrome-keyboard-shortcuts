@@ -44,7 +44,8 @@
       ],
       "keyboard_shortcuts": [
         { "keyCombo": "alt+enter", "fnName": "openAllLinks" },
-        { "keyCombo": "command+alt+shift+y", "fnName": "searchOnYoutube" }
+        { "keyCombo": "command+alt+shift+y", "fnName": "searchOnYoutube" },
+        { "keyCombo": "/", "fnName": "focusSearchBar" }
       ]
     }
   ]
