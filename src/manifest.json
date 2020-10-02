@@ -47,6 +47,14 @@
         { "keyCombo": "command+alt+shift+y", "fnName": "searchOnYoutube" },
         { "keyCombo": "/", "fnName": "focusSearchBar" }
       ]
+    },
+    {
+      "matches": ["https://www.harborfreight.com/*"],
+      "js": [
+        "js/contentScripts/HarborFreight.bundle.js",
+        "js/contentScripts/_main.bundle.js"
+      ],
+      "keyboard_shortcuts": [{ "keyCombo": "/", "fnName": "focusSearchBar" }]
     }
   ]
 }
