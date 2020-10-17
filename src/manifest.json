@@ -15,13 +15,20 @@
   },
   "content_scripts": [
     {
+      "matches": ["<all_urls>"],
+      "js": [
+        "js/contentScripts/ALL.bundle.js",
+        "js/contentScripts/_main.bundle.js"
+      ],
+      "keyboard_shortcuts": [{ "keyCombo": "/", "fnName": "focusSearchBar" }]
+    },
+    {
       "matches": ["https://www.amazon.com/*"],
       "js": [
         "js/contentScripts/Amazon.bundle.js",
         "js/contentScripts/_main.bundle.js"
       ],
       "keyboard_shortcuts": [
-        { "keyCombo": "/", "fnName": "focusSearchBar" },
         { "keyCombo": "right", "fnName": "clickNext" },
         { "keyCombo": "left", "fnName": "clickPrevious" }
       ]
@@ -44,25 +51,8 @@
       ],
       "keyboard_shortcuts": [
         { "keyCombo": "alt+enter", "fnName": "openAllLinks" },
-        { "keyCombo": "command+alt+shift+y", "fnName": "searchOnYoutube" },
-        { "keyCombo": "/", "fnName": "focusSearchBar" }
+        { "keyCombo": "command+alt+shift+y", "fnName": "searchOnYoutube" }
       ]
-    },
-    {
-      "matches": ["https://www.harborfreight.com/*"],
-      "js": [
-        "js/contentScripts/HarborFreight.bundle.js",
-        "js/contentScripts/_main.bundle.js"
-      ],
-      "keyboard_shortcuts": [{ "keyCombo": "/", "fnName": "focusSearchBar" }]
-    },
-    {
-      "matches": ["https://www.walmart.com/*"],
-      "js": [
-        "js/contentScripts/Walmart.bundle.js",
-        "js/contentScripts/_main.bundle.js"
-      ],
-      "keyboard_shortcuts": [{ "keyCombo": "/", "fnName": "focusSearchBar" }]
     }
   ]
 }
