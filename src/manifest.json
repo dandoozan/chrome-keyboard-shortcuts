@@ -55,6 +55,14 @@
         "js/contentScripts/_main.bundle.js"
       ],
       "keyboard_shortcuts": [{ "keyCombo": "/", "fnName": "focusSearchBar" }]
+    },
+    {
+      "matches": ["https://www.walmart.com/*"],
+      "js": [
+        "js/contentScripts/Walmart.bundle.js",
+        "js/contentScripts/_main.bundle.js"
+      ],
+      "keyboard_shortcuts": [{ "keyCombo": "/", "fnName": "focusSearchBar" }]
     }
   ]
 }
