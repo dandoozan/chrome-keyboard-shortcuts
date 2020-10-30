@@ -16,6 +16,11 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
+      "exclude_matches": [
+        "https://www.amazon.com/*",
+        "https://www.consumerreports.org/cars/*",
+        "https://www.google.com/search?*"
+      ],
       "js": [
         "js/contentScripts/ALL.bundle.js",
         "js/contentScripts/_main.bundle.js"
@@ -30,7 +35,8 @@
       ],
       "keyboard_shortcuts": [
         { "keyCombo": "right", "fnName": "clickNext" },
-        { "keyCombo": "left", "fnName": "clickPrevious" }
+        { "keyCombo": "left", "fnName": "clickPrevious" },
+        { "keyCombo": "/", "fnName": "focusSearchBar" }
       ]
     },
     {
@@ -40,7 +46,8 @@
         "js/contentScripts/_main.bundle.js"
       ],
       "keyboard_shortcuts": [
-        { "keyCombo": "alt+enter", "fnName": "openAllLinks" }
+        { "keyCombo": "alt+enter", "fnName": "openAllLinks" },
+        { "keyCombo": "/", "fnName": "focusSearchBar" }
       ]
     },
     {
@@ -51,7 +58,8 @@
       ],
       "keyboard_shortcuts": [
         { "keyCombo": "alt+enter", "fnName": "openAllLinks" },
-        { "keyCombo": "command+alt+shift+y", "fnName": "searchOnYoutube" }
+        { "keyCombo": "command+alt+shift+y", "fnName": "searchOnYoutube" },
+        { "keyCombo": "/", "fnName": "focusSearchBar" }
       ]
     }
   ]
