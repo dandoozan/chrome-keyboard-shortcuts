@@ -147,13 +147,13 @@ export class BrowserActions {
       );
     });
   }
-  static moveTabToFirstPosition() {
+  static moveTabToNthPosition(position) {
     return new Promise(async (resolve, reject) => {
       const tab = await getCurrentTab();
       chrome.tabs.move(
         tab.id,
         {
-          index: 0,
+          index: position - 1, //index is 0-based
         },
         resolve
       );
