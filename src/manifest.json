@@ -13,6 +13,13 @@
     "48": "images/icon.png",
     "128": "images/icon.png"
   },
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "mac": "Alt+K"
+      }
+    }
+  },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
