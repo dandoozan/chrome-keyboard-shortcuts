@@ -26,7 +26,8 @@
       "exclude_matches": [
         "https://www.amazon.com/*",
         "https://www.consumerreports.org/cars/*",
-        "https://www.google.com/search?*"
+        "https://www.google.com/search?*",
+        "https://duckduckgo.com/?q=*"
       ],
       "js": [
         "js/contentScripts/ALL.bundle.js",
@@ -67,6 +68,16 @@
         { "keyCombo": "alt+enter", "fnName": "openAllLinks" },
         { "keyCombo": "command+alt+shift+y", "fnName": "searchOnYoutube" },
         { "keyCombo": "/", "fnName": "focusSearchBar" }
+      ]
+    },
+    {
+      "matches": ["https://duckduckgo.com/?q=*"],
+      "js": [
+        "js/contentScripts/DuckDuckGo.bundle.js",
+        "js/contentScripts/_main.bundle.js"
+      ],
+      "keyboard_shortcuts": [
+        { "keyCombo": "command+alt+shift+y", "fnName": "searchOnYoutube" }
       ]
     }
   ]
