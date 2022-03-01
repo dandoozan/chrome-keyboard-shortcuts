@@ -77,6 +77,7 @@
         "js/contentScripts/_main.bundle.js"
       ],
       "keyboard_shortcuts": [
+        { "keyCombo": "command+alt+shift+g", "fnName": "searchOnGoogle" },
         { "keyCombo": "command+alt+shift+y", "fnName": "searchOnYoutube" }
       ]
     }
