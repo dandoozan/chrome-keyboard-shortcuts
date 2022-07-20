@@ -1,3 +1,5 @@
+import { sendMessageToBackground } from '../helpers/chrome';
+
 export class Page {
   //put common code for all page scripts here
   static focusSearchBar() {
@@ -23,5 +25,14 @@ export class Page {
     if (searchInput) {
       searchInput.focus();
     }
+  }
+
+  static async searchOnYoutube() {
+    let searchTerm = await sendMessageToBackground('getClipboardContents');
+    window.open(
+      `https://www.youtube.com/results?search_query=${encodeURIComponent(
+        searchTerm
+      )}`
+    );
   }
 }

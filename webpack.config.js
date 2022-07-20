@@ -8,9 +8,7 @@ const PATH_TO_SRC = path.join(__dirname, 'src');
 module.exports = {
   context: PATH_TO_SRC,
   entry: {
-    // 'js/background/background': glob.sync(
-    //     `${PATH_TO_SRC}/js/background/*.js`
-    // ),
+    'js/background/background': glob.sync(`${PATH_TO_SRC}/js/background/*.js`),
     'js/popup/popup': './js/popup/popup.js',
     // 'js/options': './js/options.js',
     'js/contentScripts/_main': './js/contentScripts/_main.js',

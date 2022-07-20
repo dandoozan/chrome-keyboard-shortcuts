@@ -2,8 +2,18 @@
   "name": "ChromeKeyboardShortcuts",
   "version": "0.1",
   "description": "",
-  "permissions": ["<all_urls>", "tabs", "management", "system.display"],
+  "permissions": [
+    "<all_urls>",
+    "tabs",
+    "management",
+    "system.display",
+    "clipboardRead"
+  ],
   "manifest_version": 2,
+  "background": {
+    "scripts": ["js/background/background.bundle.js"],
+    "persistent": false
+  },
   "browser_action": {
     "default_icon": "images/icon.png",
     "default_popup": "popup.html"
@@ -33,7 +43,10 @@
         "js/contentScripts/ALL.bundle.js",
         "js/contentScripts/_main.bundle.js"
       ],
-      "keyboard_shortcuts": [{ "keyCombo": "/", "fnName": "focusSearchBar" }]
+      "keyboard_shortcuts": [
+        { "keyCombo": "/", "fnName": "focusSearchBar" },
+        { "keyCombo": "command+alt+shift+y", "fnName": "searchOnYoutube" }
+      ]
     },
     {
       "matches": ["https://www.amazon.com/*"],
