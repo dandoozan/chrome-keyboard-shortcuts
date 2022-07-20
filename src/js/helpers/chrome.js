@@ -1,1 +1,1 @@
-../../../../_CommonChromeExtensions/dist/utils.js
+../../../../chrome-common/dist/utils.js
