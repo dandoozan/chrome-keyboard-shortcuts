@@ -37,7 +37,8 @@
         "https://www.amazon.com/*",
         "https://www.consumerreports.org/cars/*",
         "https://www.google.com/search?*",
-        "https://duckduckgo.com/?q=*"
+        "https://duckduckgo.com/?q=*",
+        "https://search.brave.com/search?q=*"
       ],
       "js": [
         "js/contentScripts/ALL.bundle.js",
@@ -84,7 +85,10 @@
       ]
     },
     {
-      "matches": ["https://duckduckgo.com/?q=*"],
+      "matches": [
+        "https://duckduckgo.com/?q=*",
+        "https://search.brave.com/search?q=*"
+      ],
       "js": [
         "js/contentScripts/DuckDuckGo.bundle.js",
         "js/contentScripts/_main.bundle.js"
