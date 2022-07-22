@@ -46,7 +46,8 @@
       ],
       "keyboard_shortcuts": [
         { "keyCombo": "/", "fnName": "focusSearchBar" },
-        { "keyCombo": "command+alt+shift+y", "fnName": "searchOnYoutube" }
+        { "keyCombo": "command+alt+shift+y", "fnName": "searchOnYoutube" },
+        { "keyCombo": "command+alt+shift+s", "fnName": "searchOnBrave" }
       ]
     },
     {

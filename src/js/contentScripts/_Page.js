@@ -35,4 +35,11 @@ export class Page {
       )}`
     );
   }
+
+  static async searchOnBrave() {
+    let searchTerm = await sendMessageToBackground('getClipboardContents');
+    window.open(
+      `https://search.brave.com/search?q=${encodeURIComponent(searchTerm)}`
+    );
+  }
 }
