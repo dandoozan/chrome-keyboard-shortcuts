@@ -21,4 +21,12 @@ export default class Amazon extends Page {
       backButton.click();
     }
   }
+  static clickClose() {
+    let closeButton = document.querySelector(
+      '.a-popover-header [data-action="a-popover-close"]'
+    );
+    if (closeButton) {
+      closeButton.click();
+    }
+  }
 }

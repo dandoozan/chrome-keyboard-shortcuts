@@ -59,6 +59,7 @@
       "keyboard_shortcuts": [
         { "keyCombo": "right", "fnName": "clickNext" },
         { "keyCombo": "left", "fnName": "clickPrevious" },
+        { "keyCombo": "escape", "fnName": "clickClose" },
         { "keyCombo": "/", "fnName": "focusSearchBar" }
       ]
     },
