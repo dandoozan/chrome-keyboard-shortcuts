@@ -26,7 +26,7 @@
   "commands": {
     "_execute_browser_action": {
       "suggested_key": {
-        "mac": "Alt+K"
+        "default": "Alt+K"
       }
     }
   },
