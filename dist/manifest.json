@@ -1,0 +1,104 @@
+{
+  "name": "ChromeKeyboardShortcuts",
+  "version": "0.1",
+  "description": "",
+  "permissions": [
+    "<all_urls>",
+    "tabs",
+    "management",
+    "system.display",
+    "clipboardRead"
+  ],
+  "manifest_version": 2,
+  "background": {
+    "scripts": ["js/background/background.bundle.js"],
+    "persistent": false
+  },
+  "browser_action": {
+    "default_icon": "images/icon.png",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "images/icon.png",
+    "48": "images/icon.png",
+    "128": "images/icon.png"
+  },
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Alt+K"
+      }
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "exclude_matches": [
+        "https://www.amazon.com/*",
+        "https://www.consumerreports.org/cars/*",
+        "https://www.google.com/search?*",
+        "https://duckduckgo.com/?q=*",
+        "https://search.brave.com/search?q=*"
+      ],
+      "js": [
+        "js/contentScripts/ALL.bundle.js",
+        "js/contentScripts/_main.bundle.js"
+      ],
+      "keyboard_shortcuts": [
+        { "keyCombo": "/", "fnName": "focusSearchBar" },
+        { "keyCombo": "command+alt+shift+y", "fnName": "searchOnYoutube" },
+        { "keyCombo": "command+alt+shift+s", "fnName": "searchOnBrave" }
+      ]
+    },
+    {
+      "matches": ["https://www.amazon.com/*"],
+      "js": [
+        "js/contentScripts/Amazon.bundle.js",
+        "js/contentScripts/_main.bundle.js"
+      ],
+      "keyboard_shortcuts": [
+        { "keyCombo": "right", "fnName": "clickNext" },
+        { "keyCombo": "left", "fnName": "clickPrevious" },
+        { "keyCombo": "escape", "fnName": "clickClose" },
+        { "keyCombo": "/", "fnName": "focusSearchBar" }
+      ]
+    },
+    {
+      "matches": ["https://www.consumerreports.org/cars/*"],
+      "js": [
+        "js/contentScripts/ConsumerReports.bundle.js",
+        "js/contentScripts/_main.bundle.js"
+      ],
+      "keyboard_shortcuts": [
+        { "keyCombo": "alt+enter", "fnName": "openAllLinks" },
+        { "keyCombo": "/", "fnName": "focusSearchBar" }
+      ]
+    },
+    {
+      "matches": ["https://www.google.com/search?*"],
+      "js": [
+        "js/contentScripts/Google.bundle.js",
+        "js/contentScripts/_main.bundle.js"
+      ],
+      "keyboard_shortcuts": [
+        { "keyCombo": "alt+enter", "fnName": "openAllLinks" },
+        { "keyCombo": "command+alt+shift+y", "fnName": "searchOnYoutube" },
+        { "keyCombo": "/", "fnName": "focusSearchBar" }
+      ]
+    },
+    {
+      "matches": [
+        "https://duckduckgo.com/?q=*",
+        "https://search.brave.com/search?q=*"
+      ],
+      "js": [
+        "js/contentScripts/DuckDuckGo.bundle.js",
+        "js/contentScripts/_main.bundle.js"
+      ],
+      "keyboard_shortcuts": [
+        { "keyCombo": "command+alt+shift+g", "fnName": "searchOnGoogle" },
+        { "keyCombo": "command+alt+shift+y", "fnName": "searchOnYoutube" }
+      ]
+    }
+  ]
+}
